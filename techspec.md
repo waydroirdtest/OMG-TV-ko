@@ -1,3 +1,4 @@
+# Specifiche dlle Funzionalità di OMG Premium TV per Stremio
 OMG Premium TV è un addon avanzato per Stremio che permette di visualizzare canali TV da playlist M3U/M3U8, arricchiti con dati EPG (Electronic Program Guide). L’addon offre numerose funzionalità sia a livello di interfaccia utente che “sotto il cofano”.
 
 ## Funzionalità visibili all’utente (Frontend)
