@@ -211,7 +211,7 @@ OMG TV funziona su tutte le piattaforme supportate da Stremio:
 - Team di Stremio Italia
 - Comunità Telegram (vedi sezione Community)
 - Iconic Panda per l'[icona](https://www.flaticon.com/free-icon/tv_18223703?term=tv&page=1&position=2&origin=tag&related_id=18223703)
-- Video di Background del frontend e per i flussi dummy creato da igor.h <a href="https://it.vecteezy.com/video-gratuiti/tv">Tv Video d&#39;archivio di Vecteezy</a> 
+- [Video di Background](https://it.vecteezy.com/video/1803236-no-signal-bad-tv) del frontend e per i flussi dummy creato da igor.h (su Vecteezy) 
 
 ## 📜 Licenza
 Progetto rilasciato sotto licenza MIT.
