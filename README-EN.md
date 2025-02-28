@@ -58,7 +58,7 @@ For complete details on the operation of new features, consult the updated user 
 
 ### 🐳 Deploy on DOCKER
 - To proceed, you must first install via Docker on Hugging Face or VPS.
-- [Follow the guide here](docker-install.md) and then return to this page once your addon website is available.
+- [Follow the guide here](docker-install-en.md) and then return to this page once your addon website is available.
 - If all of this seems incomprehensible to you, STOP; look for an online guide on Docker, check the support section at the bottom of this page, or ask an AI for help 😊
 
 ### 📲 Addon Installation
