@@ -149,4 +149,4 @@ volumes:
 
 Questo garantirà che la configurazione e i file temporanei vengano mantenuti anche dopo il riavvio del container.
 
-Se hai seguito tutti i passaggi e non hai errori, [puoi ora tornare alla guida principale](readme.md)
+Se hai seguito tutti i passaggi e non hai errori, [puoi ora tornare alla guida principale](README.md)
