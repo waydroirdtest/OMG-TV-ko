@@ -6,7 +6,8 @@ Benvenuto in OMG Premium TV, l'addon per Stremio che ti permette di guardare i t
 
 ### ⚠️ Leggi con attenzione!
 
-Lavorare a questo addon, tenerlo aggiornato è costato tantissime ore e tantissimo impegno, un caffè o una birra sono un gesto di riconoscenza molto apprezzato e mi aiutano a continuare e a mantenere attivo questo progetto!
+Lavorare a questo addon, tenerlo aggiornato è costato tantissime ore e tantissimo impegno ❤️
+Un caffè ☕ o una birra sono 🍺 un gesto di riconoscenza molto apprezzato e mi aiutano a continuare e a mantenere attivo questo progetto!
 
 **Con una donazione verrai inserito in un gruppo telegram dedicato dove riceverai in anteprima le nuove versioni! Ti aspetto!**
 
