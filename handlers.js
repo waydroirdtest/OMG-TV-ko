@@ -205,24 +205,7 @@ async function streamHandler({ id, config: userConfig }) {
         // Gestione canale speciale per la rigenerazione playlist
         if (channelId === 'rigeneraplaylistpython') {
             console.log('\n=== Richiesta rigenerazione playlist Python ===');
-            
-            // Verifica se stiamo usando un file m3u generato dallo script python
-            const isUsingGeneratedM3u = userConfig.m3u && userConfig.m3u.includes('/generated-m3u');
-            
-            if (!isUsingGeneratedM3u) {
-                console.log('❌ Non è in uso una playlist generata da script Python');
-                return { 
-                    streams: [{
-                        name: 'Errore',
-                        title: '❌ Errore: Non è in uso una playlist generata da script Python',
-                        url: 'https://static.vecteezy.com/system/resources/previews/001/803/236/mp4/no-signal-bad-tv-free-video.mp4',
-                        behaviorHints: {
-                            notWebReady: false,
-                            bingeGroup: "tv"
-                        }
-                    }]
-                };
-            }
+        
             
             // Esegui lo script Python
             const PythonRunner = require('./python-runner');
