@@ -149,4 +149,4 @@ volumes:
 
 Cela garantira que la configuration et les fichiers temporaires seront conservés même après le redémarrage du conteneur.
 
-Si vous avez suivi toutes les étapes et n'avez pas d'erreurs, [vous pouvez maintenant retourner au guide principal](README.md)
+Si vous avez suivi toutes les étapes et n'avez pas d'erreurs, [vous pouvez maintenant retourner au guide principal](README-ES.md)
