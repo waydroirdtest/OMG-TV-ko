@@ -120,14 +120,21 @@ class StreamProxyManager {
     
         // Assicurati di avere uno user agent valido
         const userAgent = headers['User-Agent'] || headers['user-agent'] || config.defaultUserAgent || 'Mozilla/5.0';
-        params.append('h_user-agent', userAgent);
+        params.set('h_user-agent', userAgent);
     
-        // Gestione referer e origin
+        // Gestione referer
         let referer = headers['referer'] || headers['Referer'] || headers['referrer'] || headers['Referrer'];
-        if (referer) params.append('h_referer', referer.replace(/\/$/, ''));
+        if (referer) {
+            referer = referer.replace(/\/$/, '');
+            params.set('h_referer', referer);
+        }
     
+        // Gestione origin
         let origin = headers['origin'] || headers['Origin'];
-        if (origin) params.append('h_origin', origin.replace(/\/$/, ''));
+        if (origin) {
+            origin = origin.replace(/\/$/, '');
+            params.set('h_origin', origin);
+        }
     
         // Determina il tipo di stream senza seguire i redirect
         let streamType = 'HLS'; // Default
@@ -146,9 +153,6 @@ class StreamProxyManager {
         } else {
             proxyUrl = `${baseUrl}/proxy/stream?${params.toString()}`;
         }
-    
-        // Log per debugging
-        console.log(`🔍 Tipo di stream rilevato: ${streamType} - URL: ${streamUrl}`);
     
         return proxyUrl;
     }
