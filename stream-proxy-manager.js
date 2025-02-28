@@ -124,8 +124,10 @@ class StreamProxyManager {
     
         // Gestione referer e origin
         let referer = headers['referer'] || headers['Referer'] || headers['referrer'] || headers['Referrer'];
+        if (referer) params.append('h_referer', referer.replace(/\/$/, ''));
     
         let origin = headers['origin'] || headers['Origin'];
+        if (origin) params.append('h_origin', origin.replace(/\/$/, ''));
     
         // Determina il tipo di stream senza seguire i redirect
         let streamType = 'HLS'; // Default
