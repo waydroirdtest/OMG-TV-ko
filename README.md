@@ -83,8 +83,8 @@ Per dettagli completi sul funzionamento delle nuove funzionalità, consulta il m
 
 ### 📱 Navigazione nel catalogo
 1. Apri Stremio
-2. Vai alla sezione **Discover** 🔍
-3. Seleziona **OMG Premium TV** dalla lista degli addon
+2. Vai alla sezione **Scopri** 🔍
+3. Seleziona **Canali TV** e poi **OMG Premium TV** dalla lista degli addon
 4. Vedrai la lista completa dei canali disponibili
 
 ### 🎯 Filtraggio dei canali
