@@ -28,7 +28,7 @@ A coffee ☕ or a beer 🍺 is a much appreciated gesture of recognition and hel
 
 ### ✨ New Features
 - **🐍 Python Resolver**: Complete system to resolve streaming URLs via customizable Python scripts
-- **🔄 Regeneration Channel**: New channel in the MAINTENANCE category to regenerate the playlist without accessing the web panel
+- **🔄 Regeneration Channel**: New channel in the ~SETTINGS~ category to regenerate the playlist without accessing the web panel
 - **🛠️ Backup and Restore**: System to save and restore the complete configuration
 - **🔧 Resolver Template**: Feature to automatically create customizable resolver script templates
 - **👤 Advanced User-Agent**: Improved management of User-Agent, Referer, and Origin headers
