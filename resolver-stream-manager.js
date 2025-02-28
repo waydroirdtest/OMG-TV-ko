@@ -146,14 +146,14 @@ class ResolverStreamManager {
                             const referer = streamDetails.headers['referer'] || streamDetails.headers['Referer'] || 
                                            streamDetails.headers['referrer'] || streamDetails.headers['Referrer'];
                             // Rimuovi lo slash finale se presente
-                            streamDetails.headers['Referer'] = referer.replace(/\/$/, '');
+                            streamDetails.headers['Referer'] = referer;
                         }
                     
                         // Rimuovi lo slash finale da origin
                         if (streamDetails.headers['origin'] || streamDetails.headers['Origin']) {
                             const origin = streamDetails.headers['origin'] || streamDetails.headers['Origin'];
                             // Rimuovi lo slash finale se presente
-                            streamDetails.headers['Origin'] = origin.replace(/\/$/, '');
+                            streamDetails.headers['Origin'] = origin;
                         }
                     }
                     // Risolvi l'URL tramite lo script Python
