@@ -1,3 +1,8 @@
-# Formato: channel_id=epg_id
+# File di esempio per il funzionamento del remapping
+# Scrivi il tuo remapper e poi usa servizi come paste.ee per usare il file
+
+# Formato:
+channel_id=epg_id
+
 # Linee che iniziano con # sono commenti
 
