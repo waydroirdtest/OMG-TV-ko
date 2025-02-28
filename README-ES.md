@@ -31,7 +31,7 @@ Trabajar en este addon y mantenerlo actualizado ha costado muchísimas horas y m
 
 ### ✨ Nuevas funcionalidades
 - **🐍 Resolver Python**: Sistema completo para resolver URLs de streaming mediante scripts Python personalizables
-- **🔄 Canal de regeneración**: Nuevo canal en la categoría MANTENIMIENTO para regenerar la lista de reproducción sin acceder al panel web
+- **🔄 Canal de regeneración**: Nuevo canal en la categoría ~SETTINGS~ para regenerar la lista de reproducción sin acceder al panel web
 - **🛠️ Backup y restauración**: Sistema para guardar y restaurar la configuración completa
 - **🔧 Template resolver**: Funcionalidad para crear automáticamente plantillas de scripts resolver personalizables
 - **👤 User-Agent avanzado**: Gestión mejorada de las cabeceras User-Agent, Referer y Origin
