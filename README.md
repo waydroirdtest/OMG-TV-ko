@@ -56,9 +56,10 @@ Per dettagli completi sul funzionamento delle nuove funzionalità, consulta il m
 
 ## 🚀 Iniziamo: Installazione
 
-### Deploy su DOCKER
+### 🐳 Deploy su DOCKER
 - Per poter procedere devi prima fare l'installazione tramite docker su Hugging Face o su VPS.
 - Segui la guida qui e poi ritorna a questa pagina una volta disponibile il sito web del tuo addon.
+- Se tutte queste cose ti sembrano incomprensibili FERMATI; cerca una guida on line su docker, guarda la sezione supporto in basso a questa pagina o chiedi aiuto ad un AI 😊
 
 ### 📲 Installazione dell'addon
 1. Apri la pagina web di configurazione OMG Premium TV
