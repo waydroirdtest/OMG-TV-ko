@@ -418,7 +418,7 @@ const renderConfigPage = (protocol, host, query, manifest) => {
                </div>
 
                <div style="margin-top: 30px; text-align: center; font-size: 14px; color: #ccc;">
-                   <p>Addon creato con passione da McCoy88f - <a href="https://github.com/mccoy88f/OMG-TV-Stremio-Addon" target="_blank">GitHub Repository</a></p>
+                   <p>Addon creato con passione da McCoy88f - <a href="https://github.com/mccoy88f/OMG-Premium-TV" target="_blank">GitHub Repository</a></p>
                    
                    <h3 style="margin-top: 20px;">Sostieni questo progetto!</h3>
                    
