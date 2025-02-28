@@ -21,7 +21,7 @@ Lavorare a questo addon, tenerlo aggiornato è costato tantissime ore e tantissi
 
 ### 🚀 Versione 6.0.0 (Attuale)
 
-### 📢 Nuovo Nome
+### 📢 Rebrand del nome
 - **📜 OMG+ diventa OMG Premium**: Nuovo nome per differenziare e valorizzare tutte le nuove funzioni disponibili. OMG TV rimane come versione base con canali preimpostati. Non verrà più aggiornata.
 
 ### ✨ Nuove funzionalità
