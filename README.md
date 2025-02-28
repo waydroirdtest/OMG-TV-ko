@@ -113,7 +113,7 @@ Clicca su un canale per vedere:
 ## 🛠️ Impostazioni avanzate
 
 ### 🌐 Configurazione proxy
-- **Proxy URL** 🔗: URL del proxy per gli stream (è compatibile solo con MediaFlow Proxy)
+- **Proxy URL** 🔗: URL del proxy per gli stream (è compatibile solo con [MediaFlow Proxy](https://github.com/mhdzumair/mediaflow-proxy))
 - **Password Proxy** 🔑: Password per l'autenticazione del proxy
 - **Forza Proxy** ✅: Obbliga tutti gli stream ad utilizzare il proxy
 
