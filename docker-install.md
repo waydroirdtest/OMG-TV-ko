@@ -28,7 +28,7 @@ Installare OMG TV tramite Docker offre diversi vantaggi:
    - Assegna un nome allo stack (es. `omg-tv`)
 
 3. **Configura lo Stack** ⚙️
-   - Nella sezione "Web editor", incolla il seguente file [docker-compose.portainer](docker-compose.portainer] presente nella repository.
+   - Nella sezione "Web editor", incolla il seguente file [docker-compose.portainer](docker-compose.portainer) presente nella repository.
 
 4. **Avvia lo Stack** ▶️
    - Clicca sul pulsante **Deploy the stack**
