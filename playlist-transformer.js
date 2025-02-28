@@ -162,8 +162,17 @@ class PlaylistTransformer {
       });
 
       const groupMatch = metadata.match(/group-title="([^"]+)"/);
-      const group = groupMatch ? groupMatch[1] : 'Undefined';
-      const genres = group.split(';').map(g => g.trim());
+      let genres = [];
+      if (groupMatch) {
+          genres = groupMatch[1].split(';')
+              .map(g => g.trim())
+              .filter(g => g !== '' && g.toLowerCase() !== 'undefined');
+      }
+  
+      // Se genres è vuoto, usa 'Other Channels'
+      if (genres.length === 0) {
+          genres = ['Altri Canali'];
+      }
 
       const nameParts = metadata.split(',');
       const name = nameParts[nameParts.length - 1].trim();
