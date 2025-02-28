@@ -1,4 +1,4 @@
-# 📺 Manuale Utente di OMG Premium TV per Stremio
+# 📺 OMG Premium TV per Stremio
 
 ## 👋 Introduzione
 
