@@ -171,7 +171,7 @@ Clicca su un canale per vedere:
 
 ### 🔄 Modifica delle impostazioni
 - In Stremio, vai su **Impostazioni** ⚙️ > **Addon**
-- Clicca su **Configura** 🔄 accanto a OMG TV
+- Clicca su **Configura** 🔄 accanto a OMG Premium TV
 - Accedi alla pagina di configurazione, fai le modifiche che ti interessano
 - Premi su **Genera Configurazione**
 - Onde evitare un doppione rimuovi l'addon su Stremio
@@ -193,7 +193,7 @@ Clicca su un canale per vedere:
 
 ## 📱 Compatibilità
 
-OMG TV funziona su tutte le piattaforme supportate da Stremio:
+OMG PremTV funziona su tutte le piattaforme supportate da Stremio:
 - 💻 Windows
 - 🍎 macOS
 - 🐧 Linux
