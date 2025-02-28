@@ -203,8 +203,19 @@ OMG TV funziona su tutte le piattaforme supportate da Stremio:
 
 ## 👥 Community
 - Se cerchi supporto, guide o informazioni sul mondo OMG, MediaFlow Proxy e Stremio puoi visitare:
-- Reddit: https://www.reddit.com/r/Stremio_Italia/
+- Reddit (Team Stremio Italia): [Stremio Italia](https://www.reddit.com/r/Stremio_Italia/)
 - Telegram: http:/t.me/Stremio_ITA
+
+## 👏 Ringraziamenti
+- FuriousCat per l'idea del nome OMG
+- Team di Stremio Italia
+- Comunità Telegram (vedi sezione Community)
+- Iconic Panda per l'[icona](https://www.flaticon.com/free-icon/tv_18223703?term=tv&page=1&position=2&origin=tag&related_id=18223703)
+- Video di Background del frontend e per i flussi dummy creato da igor.h <a href="https://it.vecteezy.com/video-gratuiti/tv">Tv Video d&#39;archivio di Vecteezy</a> 
+
+## 📜 Licenza
+Progetto rilasciato sotto licenza MIT.
+
 
 ---
 
