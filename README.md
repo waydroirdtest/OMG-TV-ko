@@ -1,8 +1,8 @@
-# 📺 Manuale Utente di OMG TV per Stremio
+# 📺 Manuale Utente di OMG Premium TV per Stremio
 
 ## 👋 Introduzione
 
-Benvenuto in OMG TV, l'addon per Stremio che ti permette di guardare i tuoi canali TV preferiti da playlist M3U/M3U8, arricchiti con informazioni sui programmi (EPG). Questa guida ti aiuterà a sfruttare al meglio tutte le funzionalità disponibili.
+Benvenuto in OMG Premium TV, l'addon per Stremio che ti permette di guardare i tuoi canali TV e IPTV preferiti da playlist M3U/M3U8, arricchiti con informazioni sui programmi (EPG). Questa guida ti aiuterà a sfruttare al meglio tutte le funzionalità disponibili.
 
 ## 🚀 Iniziamo: Installazione
 
@@ -154,6 +154,6 @@ Se apprezzi questo addon, considera una donazione all'autore:
 
 ---
 
-📚 **Nota importante**: OMG TV è progettato per accedere a contenuti legali. Assicurati di rispettare la normativa del tuo paese riguardo lo streaming di contenuti.
+📚 **Nota importante**: OMG Premium TV è progettato per accedere a contenuti legali. Nell'addon non sono inclusi canali o flussi. Assicurati di rispettare la normativa del tuo paese riguardo lo streaming di contenuti.
 
-🌟 Grazie per aver scelto OMG TV! Goditi la visione! 🌟
+🌟 Grazie per aver scelto OMG Premium TV! Goditi la visione! 🌟
