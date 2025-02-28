@@ -189,7 +189,7 @@ Click on a channel to see:
 - ✅ Custom playlist generation
 - ✅ Automatic updates
 - ✅ Configuration backup and restore
-- TECH SPEC on [wiki](https://github.com/mccoy88f/OMG-Premium-TV/wiki)
+- TECH SPEC on [wiki](https://github.com/mccoy88f/OMG-Premium-TV/wiki/Tech-Spec-%E2%80%90-Specifiche-Teniche))
 
 
 ## 📱 Compatibility
