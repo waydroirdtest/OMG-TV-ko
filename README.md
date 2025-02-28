@@ -58,7 +58,7 @@ Per dettagli completi sul funzionamento delle nuove funzionalità, consulta il m
 
 ### 🐳 Deploy su DOCKER
 - Per poter procedere devi prima fare l'installazione tramite docker su Hugging Face o su VPS.
-- Segui la guida qui e poi ritorna a questa pagina una volta disponibile il sito web del tuo addon.
+- [Segui la guida qui](docker-install.md) e poi ritorna a questa pagina una volta disponibile il sito web del tuo addon.
 - Se tutte queste cose ti sembrano incomprensibili FERMATI; cerca una guida on line su docker, guarda la sezione supporto in basso a questa pagina o chiedi aiuto ad un AI 😊
 
 ### 📲 Installazione dell'addon
