@@ -55,7 +55,7 @@ Per dettagli completi sul funzionamento delle nuove funzionalità, consulta il m
 - Segui la guida qui e poi ritorna a questa pagina una volta disponibile il sito web del tuo addon.
 
 ### 📲 Installazione dell'addon
-1. Apri la pagina web di configurazione OMG TV
+1. Apri la pagina web di configurazione OMG Premium TV
 2. Configura l'addon secondo le tue esigenze
 3. Clicca sul pulsante **INSTALLA SU STREMIO** 🔘
 4. Stremio si aprirà automaticamente e ti chiederà di confermare l'installazione
@@ -77,7 +77,7 @@ Per dettagli completi sul funzionamento delle nuove funzionalità, consulta il m
 ### 📱 Navigazione nel catalogo
 1. Apri Stremio
 2. Vai alla sezione **Discover** 🔍
-3. Seleziona **OMG TV** dalla lista degli addon
+3. Seleziona **OMG Premium TV** dalla lista degli addon
 4. Vedrai la lista completa dei canali disponibili
 
 ### 🎯 Filtraggio dei canali
@@ -106,7 +106,7 @@ Clicca su un canale per vedere:
 - **Forza Proxy** ✅: Obbliga tutti gli stream ad utilizzare il proxy
 
 ### 🆔 Gestione ID e aggiornamenti
-- **ID Suffix** 🏷️: Aggiunge un suffisso agli ID dei canali (es. `.it`)
+- **ID Suffix** 🏷️: Aggiunge un suffisso agli ID dei canali senza id nella playlist (es. `.it`)
 - **Percorso file remapper** 📝: Specifica un file per la rimappatura degli ID EPG
 - **Intervallo Aggiornamento** ⏱️: Specifica quanto spesso aggiornare la playlist (formato `HH:MM`)
 
