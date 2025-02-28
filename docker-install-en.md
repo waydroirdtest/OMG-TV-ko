@@ -1,4 +1,5 @@
 # 🐳 Installing OMG Premium TV using Docker
+***[🇮🇹 Leggi in italiano](docker-install.md)***
 
 ## 🖥️ Why use Docker?
 
