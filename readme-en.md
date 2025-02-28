@@ -15,7 +15,7 @@ A coffee ☕ or a beer 🍺 is a much appreciated gesture of recognition and hel
 
 <a href="https://www.buymeacoffee.com/mccoy88f"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a beer&emoji=🍺&slug=mccoy88f&button_colour=FFDD00&font_colour=000000&font_family=Bree&outline_colour=000000&coffee_colour=ffffff" /></a>
 
-[You can also buy me a beer with PayPal 🍻](https://paypal.me/mccoy88f?country.x=IT&locale.x=it_IT)
+[You can also buy me a beer with PayPal 🍻](https://paypal.me/mccoy88f?country.x=US&locale.x=en_US)
 
 ## 🔄 OMG Premium TV Changelog
 
