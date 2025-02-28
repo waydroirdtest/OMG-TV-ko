@@ -202,7 +202,7 @@ OMG TV funziona su tutte le piattaforme supportate da Stremio:
 - 📺 Apple TV
 
 ## 👥 Community
-- Se cerchi supporto, guide o informazioni sul mondo OMG e Stremio puoi visitare:
+- Se cerchi supporto, guide o informazioni sul mondo OMG, MediaFlow Proxy e Stremio puoi visitare:
 - Reddit: https://www.reddit.com/r/Stremio_Italia/
 - Telegram: http:/t.me/Stremio_ITA
 
