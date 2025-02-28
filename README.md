@@ -4,7 +4,45 @@
 
 Benvenuto in OMG Premium TV, l'addon per Stremio che ti permette di guardare i tuoi canali TV e IPTV preferiti da playlist M3U/M3U8, arricchiti con informazioni sui programmi (EPG). Questa guida ti aiuterà a sfruttare al meglio tutte le funzionalità disponibili.
 
+# 🔄 Changelog di OMG TV
+
+## 🚀 Versione 6.0.0 (Attuale)
+
+### ✨ Nuove funzionalità
+- **🐍 Resolver Python**: Sistema completo per risolvere URL di streaming tramite script Python personalizzabili
+- **🔄 Canale di rigenerazione**: Nuovo canale nella categoria MANUTENZIONE per rigenerare la playlist senza accedere al pannello web
+- **🛠️ Backup e ripristino**: Sistema per salvare e ripristinare la configurazione completa
+- **🔧 Template resolver**: Funzionalità per creare automaticamente template di script resolver personalizzabili
+- **👤 User-Agent avanzato**: Gestione migliorata degli header User-Agent, Referer e Origin
+- **🧩 Moduli Python**: Supporto integrato per request e altri moduli Python per script avanzati
+
+### 🔧 Miglioramenti
+- **🐳 Supporto Docker migliorato**: Configurazioni ottimizzate per Hugging Face e Portainer
+- **♻️ Cache intelligente**: Sistema di cache completamente ridisegnato con performance migliorate
+- **🔄 Aggiornamento pianificato**: Controllo preciso dell'intervallo di aggiornamento in formato HH:MM
+- **📋 Interfaccia web rinnovata**: Pannello di configurazione più intuitivo e ricco di funzionalità
+- **⚡ Streaming ottimizzato**: Miglior gestione del fallback tra proxy e stream diretti
+- **🛡️ Gestione errori robusta**: Sistema migliorato di gestione errori e tentativi multipli
+
+### 🐛 Correzioni
+- **🔄 Risolto il loop infinito**: Corretto il problema del loop infinito con resolver e proxy attivi
+- **🔌 Migliorata compatibilità**: Risolti problemi di compatibilità con diverse tipologie di playlist
+- **🧰 Fix header HTTP**: Corretta la gestione degli header HTTP personalizzati
+- **🔍 Fix ricerca canali**: Migliorata la ricerca dei canali per corrispondenza parziale
+- **📊 Ottimizzazione EPG**: Risolti problemi con EPG di grandi dimensioni
+
+## 📝 Note di aggiornamento
+- Le configurazioni precedenti NON compatibili rispetto alle installazioni di OMG TV e OMG+ TV.
+- Si consiglia di eseguire una nuova installazione da zero su Hugging Face o su VPS (consiglio Portainer)
+- Per sfruttare le funzionalità del resolver Python, è necessario configurarlo nella sezione avanzata
+
+Per dettagli completi sul funzionamento delle nuove funzionalità, consulta il manuale utente aggiornato.
+
 ## 🚀 Iniziamo: Installazione
+
+### Deploy su DOCKER
+- Per poter procedere devi prima fare l'installazione tramite docker su Hugging Face o su VPS.
+- Segui la guida qui e poi ritorna a questa pagina una volta disponibile il sito web del tuo addon.
 
 ### 📲 Installazione dell'addon
 1. Apri la pagina web di configurazione OMG TV
@@ -53,7 +91,7 @@ Clicca su un canale per vedere:
 ## 🛠️ Impostazioni avanzate
 
 ### 🌐 Configurazione proxy
-- **Proxy URL** 🔗: URL del proxy per gli stream
+- **Proxy URL** 🔗: URL del proxy per gli stream (è compatibile solo con MediaFlow Proxy)
 - **Password Proxy** 🔑: Password per l'autenticazione del proxy
 - **Forza Proxy** ✅: Obbliga tutti gli stream ad utilizzare il proxy
 
