@@ -176,11 +176,27 @@ class StreamProxyManager {
                 headers['User-Agent'] = config.defaultUserAgent;
             }
     
-            // Costruisce l'URL del proxy
-            const proxyUrl = await this.buildProxyUrl(input.url, headers, userConfig);
+            // Costruisce l'URL del proxy (questa chiamata già normalizza l'URL rimuovendo lo slash finale)
+            let proxyUrl = await this.buildProxyUrl(input.url, headers, userConfig);
     
             // Verifica se il proxy è attivo e funzionante
-            const isHealthy = await this.checkProxyHealth(proxyUrl, headers);
+            let isHealthy = await this.checkProxyHealth(proxyUrl, headers);
+            
+            // Se il proxy non è sano, prova la versione con slash finale
+            if (!isHealthy) {
+                console.log(`⚠️ Proxy non valido, provo versione con slash finale per: ${input.url}`);
+                
+                // Aggiungi lo slash finale e riprova
+                const urlWithSlash = input.url.endsWith('/') ? input.url : input.url + '/';
+                const proxyUrlWithSlash = await this.buildProxyUrl(urlWithSlash, headers, userConfig);
+                const isHealthyWithSlash = await this.checkProxyHealth(proxyUrlWithSlash, headers);
+                
+                if (isHealthyWithSlash) {
+                    console.log(`✅ Versione con slash finale funzionante per: ${input.url}`);
+                    proxyUrl = proxyUrlWithSlash;
+                    isHealthy = true;
+                }
+            }
             
             // Determina il tipo di stream (HLS, DASH o HTTP)
             let streamType = 'HLS'; // Default
@@ -222,7 +238,7 @@ class StreamProxyManager {
         } catch (error) {
             console.error('❌ Errore durante l\'elaborazione del proxy:', error.message);
             
-            // In caso di errore, aggiungi comunque lo stream originale
+            // In caso di errore, aggiungi lo stream originale SOLO se force_proxy è attivo
             if (userConfig.force_proxy === 'true') {
                 streams.push({
                     name: input.name,
