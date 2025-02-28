@@ -31,7 +31,7 @@ Un caffè ☕ o una birra sono 🍺 un gesto di riconoscenza molto apprezzato e 
 
 ### ✨ Nuove funzionalità
 - **🐍 Resolver Python**: Sistema completo per risolvere URL di streaming tramite script Python personalizzabili
-- **🔄 Canale di rigenerazione**: Nuovo canale nella categoria MANUTENZIONE per rigenerare la playlist senza accedere al pannello web
+- **🔄 Canale di rigenerazione**: Nuovo canale nella categoria ~SETTINGS~ per rigenerare la playlist senza accedere al pannello web
 - **🛠️ Backup e ripristino**: Sistema per salvare e ripristinare la configurazione completa
 - **🔧 Template resolver**: Funzionalità per creare automaticamente template di script resolver personalizzabili
 - **👤 User-Agent avanzato**: Gestione migliorata degli header User-Agent, Referer e Origin
