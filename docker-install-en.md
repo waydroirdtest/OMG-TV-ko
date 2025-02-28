@@ -149,4 +149,4 @@ volumes:
 
 This will ensure that the configuration and temporary files are maintained even after restarting the container.
 
-If you have followed all the steps and have no errors, [you can now return to the main guide](readme-en.md)
+If you have followed all the steps and have no errors, [you can now return to the main guide](README-ES.md)
