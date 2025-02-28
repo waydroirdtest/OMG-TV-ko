@@ -15,7 +15,7 @@ Trabajar en este addon y mantenerlo actualizado ha costado muchísimas horas y m
 
 <a href="https://www.buymeacoffee.com/mccoy88f"><img src="https://img.buymeacoffee.com/button-api/?text=Invítame a una cerveza&emoji=🍺&slug=mccoy88f&button_colour=FFDD00&font_colour=000000&font_family=Bree&outline_colour=000000&coffee_colour=ffffff" /></a>
 
-[También puedes invitarme a una cerveza con PayPal 🍻](https://paypal.me/mccoy88f?country.x=IT&locale.x=it_IT)
+[También puedes invitarme a una cerveza con PayPal 🍻](https://paypal.me/mccoy88f?country.x=ES&locale.x=es_ES)
 
 
 
@@ -61,7 +61,7 @@ Para detalles completos sobre el funcionamiento de las nuevas funcionalidades, c
 
 ### 🐳 Despliegue en DOCKER
 - Para poder proceder primero debes hacer la instalación mediante docker en Hugging Face o en VPS.
-- [Sigue la guía aquí](docker-install.md) y luego vuelve a esta página una vez que esté disponible el sitio web de tu addon.
+- [Sigue la guía aquí](docker-install-es.md) y luego vuelve a esta página una vez que esté disponible el sitio web de tu addon.
 - Si todas estas cosas te parecen incomprensibles DETENTE; busca una guía en línea sobre docker, mira la sección de soporte al final de esta página o pide ayuda a una IA 😊
 
 ### 📲 Instalación del addon
