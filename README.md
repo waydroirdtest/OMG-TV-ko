@@ -8,11 +8,12 @@ Benvenuto in OMG Premium TV, l'addon per Stremio che ti permette di guardare i t
 
 Lavorare a questo addon, tenerlo aggiornato è costato tantissime ore e tantissimo impegno, un caffè o una birra sono un gesto di riconoscenza molto apprezzato e mi aiutano a continuare e a mantenere attivo questo progetto!
 
+**Con una donazione verrai inserito in un gruppo telegram dedicato dove riceverai in anteprima le nuove versioni! Ti aspetto!**
+
 <a href="https://www.buymeacoffee.com/mccoy88f"><img src="https://img.buymeacoffee.com/button-api/?text=Offrimi una birra&emoji=🍺&slug=mccoy88f&button_colour=FFDD00&font_colour=000000&font_family=Bree&outline_colour=000000&coffee_colour=ffffff" /></a>
 
 [Puoi anche offrirmi una birra con PayPal 🍻](https://paypal.me/mccoy88f?country.x=IT&locale.x=it_IT)
 
-**Con una donazione verrai inserito in un gruppo telegram dedicato dove riceverai in anteprima le nuove versioni! Ti aspetto!**
 
 
 
