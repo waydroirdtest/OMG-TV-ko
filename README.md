@@ -1,5 +1,7 @@
 # 📺 OMG Premium TV per Stremio
 
+[🇬🇧 Read in English](readme-en.md)
+
 ## 👋 Introduzione
 
 Benvenuto in OMG Premium TV, l'addon per Stremio che ti permette di guardare i tuoi canali TV e IPTV preferiti da playlist M3U/M3U8, arricchiti con informazioni sui programmi (EPG). Questa guida ti aiuterà a sfruttare al meglio tutte le funzionalità disponibili.
@@ -204,8 +206,8 @@ OMG PremTV funziona su tutte le piattaforme supportate da Stremio:
 
 ## 👥 Community
 - Se cerchi supporto, guide o informazioni sul mondo OMG, MediaFlow Proxy e Stremio puoi visitare:
-- Reddit (Team Stremio Italia): [Stremio Italia](https://www.reddit.com/r/Stremio_Italia/)
-- Telegram: http:/t.me/Stremio_ITA
+- [Reddit (Team Stremio Italia)](https://www.reddit.com/r/Stremio_Italia/)
+- [Gruppo Telegram](http:/t.me/Stremio_ITA)
 
 ## 👏 Ringraziamenti
 - FuriousCat per l'idea del nome OMG
