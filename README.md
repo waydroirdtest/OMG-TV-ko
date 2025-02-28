@@ -4,9 +4,19 @@
 
 Benvenuto in OMG Premium TV, l'addon per Stremio che ti permette di guardare i tuoi canali TV e IPTV preferiti da playlist M3U/M3U8, arricchiti con informazioni sui programmi (EPG). Questa guida ti aiuterà a sfruttare al meglio tutte le funzionalità disponibili.
 
-## 🔄 Changelog di OMG TV
+### IMPORTANTE: Prima di tutto...
+
+<a href="https://www.buymeacoffee.com/mccoy88f"><img src="https://img.buymeacoffee.com/button-api/?text=Offrimi una birra&emoji=🍺&slug=mccoy88f&button_colour=FFDD00&font_colour=000000&font_family=Bree&outline_colour=000000&coffee_colour=ffffff" /></a>
+
+[Puoi anche offrirmi una birra con PayPal 🍻](https://paypal.me/mccoy88f?country.x=IT&locale.x=it_IT)
+
+
+## 🔄 Changelog di OMG Premium TV
 
 ### 🚀 Versione 6.0.0 (Attuale)
+
+### 📢 Nuovo Nome
+- **📜 OMG+ diventa OMG Premium**: Nuovo nome per differenziare e valorizzare tutte le nuove funzioni disponibili. OMG TV rimane come versione base con canali preimpostati. Non verrà più aggiornata.
 
 ### ✨ Nuove funzionalità
 - **🐍 Resolver Python**: Sistema completo per risolvere URL di streaming tramite script Python personalizzabili
@@ -184,11 +194,10 @@ OMG TV funziona su tutte le piattaforme supportate da Stremio:
 - 📺 Android TV
 - 📺 Apple TV
 
-## ❤️ Supporto e donazioni
-
-Se apprezzi questo addon, considera una donazione all'autore:
-- ☕ **Buy Me a Coffee**: Supporta lo sviluppo di OMG TV
-- 💰 **PayPal**: Fai una donazione direttamente all'autore
+## 👥 Community
+- Se cerchi supporto, guide o informazioni sul mondo OMG e Stremio puoi visitare:
+- Reddit: https://www.reddit.com/r/Stremio_Italia/
+- Telegram: http:/t.me/Stremio_ITA
 
 ---
 
