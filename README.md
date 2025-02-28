@@ -1,6 +1,6 @@
 # 📺 OMG Premium TV per Stremio
 
-***[🇮🇹 Leggi in italiano](README.md)*** - ***[🇬🇧 Read in English](README-EN.md)*** - ***[🇫🇷 Lire en Français](README-EN.md)*** - ***[🇪🇸 Leer en español](README-ES.md)***
+***[🇮🇹 Leggi in italiano](README.md)*** - ***[🇬🇧 Read in English](README-EN.md)*** - ***[🇫🇷 Lire en Français](README-FR.md)*** - ***[🇪🇸 Leer en español](README-ES.md)***
 
 ## 👋 Introduzione
 
