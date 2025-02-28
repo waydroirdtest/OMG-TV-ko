@@ -138,7 +138,7 @@ Per visualizzare i log dell'addon:
 - Verifica che non ci siano restrizioni di rete sulle chiamate esterne
 
 ### 💾 Problemi di persistenza
-- Per mantenere i dati tra i riavvii, aggiungi volumi dedicati nel docker-compose
+- Per mantenere i dati tra i riavvii, puoi provare ad aggiungere volumi dedicati nel docker-compose
 
 ```yaml
 volumes:
@@ -147,3 +147,5 @@ volumes:
 ```
 
 Questo garantirà che la configurazione e i file temporanei vengano mantenuti anche dopo il riavvio del container.
+
+Se hai seguito tutti i passaggi e non hai errori, [puoi ora tornare alla guida principale](readme.md)
