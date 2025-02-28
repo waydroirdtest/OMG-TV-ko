@@ -149,4 +149,4 @@ volumes:
 
 Esto garantizará que la configuración y los archivos temporales se mantengan incluso después de reiniciar el contenedor.
 
-Si has seguido todos los pasos y no tienes errores, [puedes ahora volver a la guía principal](README.md)
+Si has seguido todos los pasos y no tienes errores, [puedes ahora volver a la guía principal](README-ES.md)
