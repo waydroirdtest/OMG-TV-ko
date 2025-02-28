@@ -8,7 +8,7 @@ class StreamProxyManager {
         this.lastCheck = new Map();   // Usato per memorizzare l'ultimo controllo di salute
         this.CACHE_DURATION = 1 * 60 * 1000; // 1 minuto
         this.MAX_RETRY_ATTEMPTS = 3; // Numero massimo di tentativi
-        this.RETRY_DELAY = 1000; // Intervallo tra i tentativi in ms
+        this.RETRY_DELAY = 500; // Intervallo tra i tentativi in ms
     }
 
     async validateProxyUrl(url) {
