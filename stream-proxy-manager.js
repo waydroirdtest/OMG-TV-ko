@@ -125,14 +125,12 @@ class StreamProxyManager {
         // Gestione referer
         let referer = headers['referer'] || headers['Referer'] || headers['referrer'] || headers['Referrer'];
         if (referer) {
-            referer = referer.replace(/\/$/, '');
             params.set('h_referer', referer);
         }
     
         // Gestione origin
         let origin = headers['origin'] || headers['Origin'];
         if (origin) {
-            origin = origin.replace(/\/$/, '');
             params.set('h_origin', origin);
         }
     
