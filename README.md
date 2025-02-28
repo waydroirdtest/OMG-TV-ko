@@ -12,6 +12,7 @@ Lavorare a questo addon, tenerlo aggiornato è costato tantissime ore e tantissi
 
 [Puoi anche offrirmi una birra con PayPal 🍻](https://paypal.me/mccoy88f?country.x=IT&locale.x=it_IT)
 
+**Con una donazione verrai inserito in un gruppo telegram dedicato dove riceverai in anteprima le nuove versioni! Ti aspetto!**
 
 ## 🔄 Changelog di OMG Premium TV
 
