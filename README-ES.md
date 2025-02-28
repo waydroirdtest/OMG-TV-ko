@@ -6,6 +6,8 @@
 
 Bienvenido a OMG Premium TV, el addon para Stremio que te permite ver tus canales de TV e IPTV favoritos desde listas de reproducción M3U/M3U8, enriquecidas con información sobre programas (EPG). Esta guía te ayudará a aprovechar al máximo todas las funcionalidades disponibles.
 
+<img width="1440" alt="Screenshot 2025-02-28 alle 21 36 52" src="https://github.com/user-attachments/assets/c85b2a33-0174-4cb3-b7a9-2cc2140c8c0f" />
+
 ### ⚠️ ¡Lee con atención!
 
 Trabajar en este addon y mantenerlo actualizado ha costado muchísimas horas y muchísimo esfuerzo ❤️
