@@ -140,20 +140,13 @@ class ResolverStreamManager {
                     };
                     // Pulizia degli header prima di inviare al resolver
                     if (streamDetails.headers) {
-                        // Rimuovi lo slash finale da referer/referrer
-                        if (streamDetails.headers['referer'] || streamDetails.headers['Referer'] || 
-                            streamDetails.headers['referrer'] || streamDetails.headers['Referrer']) {
-                            const referer = streamDetails.headers['referer'] || streamDetails.headers['Referer'] || 
-                                           streamDetails.headers['referrer'] || streamDetails.headers['Referrer'];
-                            // Rimuovi lo slash finale se presente
-                            streamDetails.headers['Referer'] = referer.replace(/\/$/, '');
+                        if (streamDetails.headers['referer'] || streamDetails.headers['Referer'] || streamDetails.headers['referrer'] || streamDetails.headers['Referrer']) {
+                            const referer = streamDetails.headers['referer'] || streamDetails.headers['Referer'] || streamDetails.headers['referrer'] || streamDetails.headers['Referrer'];
+                            streamDetails.headers['Referer'] = referer;
                         }
-                    
-                        // Rimuovi lo slash finale da origin
                         if (streamDetails.headers['origin'] || streamDetails.headers['Origin']) {
                             const origin = streamDetails.headers['origin'] || streamDetails.headers['Origin'];
-                            // Rimuovi lo slash finale se presente
-                            streamDetails.headers['Origin'] = origin.replace(/\/$/, '');
+                            streamDetails.headers['Origin'] = origin;
                         }
                     }
                     // Risolvi l'URL tramite lo script Python
