@@ -28,38 +28,7 @@ Installare OMG TV tramite Docker offre diversi vantaggi:
    - Assegna un nome allo stack (es. `omg-tv`)
 
 3. **Configura lo Stack** ⚙️
-   - Nella sezione "Web editor", incolla il seguente file `docker-compose.yml`:
-
-```yaml
-version: '3.8'
-
-services:
-  omg-tv-stremio-addon:
-    image: node:16-slim
-    container_name: omg-tv-stremio-addon
-
-    environment:
-      - PORT=7860
-      - HOST=0.0.0.0
-      
-    working_dir: /app
-    volumes:
-      - .:/app # Monta la directory corrente nel container (opzionale, se vuoi lavorare con file locali)
-    command: >
-      sh -c "
-        apt-get update && apt-get install -y git python3 python3-pip &&
-        pip3 install requests &&
-        rm -rf /tmp/repo &&
-        git clone --branch rc-1 https://github.com/mccoy88f/OMG-TV-Stremio-Addon.git /tmp/repo &&
-        cp -r /tmp/repo/* /app/ &&
-        mkdir -p /app/data /app/temp && 
-        chmod 777 /app/temp &&
-        chown -R node:node /app/data &&
-        cd /app &&
-        npm install &&
-        node index.js
-      "
-```
+   - Nella sezione "Web editor", incolla il seguente file [docker-compose.portainer](docker-compose.portainer]) presente nella repository.
 
 4. **Avvia lo Stack** ▶️
    - Clicca sul pulsante **Deploy the stack**
@@ -91,44 +60,7 @@ services:
 
 3. **Configura il Dockerfile** 📝
    - Crea un nuovo file chiamato `Dockerfile`
-   - Incolla il seguente contenuto:
-
-```Dockerfile
-FROM node:16-slim
-
-# Define build argument for branch
-ARG BRANCH=rc-1
-
-# Install git, Python and pip
-RUN apt-get update && \
-    apt-get install -y git python3 python3-pip && \
-    pip3 install requests && \
-    rm -rf /var/lib/apt/lists/*
-
-WORKDIR /app
-
-# Clone the repository and checkout specified branch
-RUN git clone https://github.com/mccoy88f/OMG-TV-Stremio-Addon.git . && \
-    git checkout ${BRANCH}
-
-# Install dependencies
-RUN npm install
-
-# Create directories for Python scripts and generated playlists
-RUN mkdir -p /app/temp && \
-    chmod 777 /app/temp
-RUN chmod 777 /app
-
-# Expose the port (Hugging Face uses 7860)
-EXPOSE 7860
-
-# Set essential environment variables for Hugging Face
-ENV PORT=7860
-ENV HOST=0.0.0.0
-
-# Start the application
-CMD ["node", "index.js"]
-```
+   - Incolla il contenuto del file [Dockerfile.hf](Dockerfile.hf) presente nella repository.
 
 4. **Commit e Avvia il Deployment** 📤
    - Clicca su **Commit changes to main**
