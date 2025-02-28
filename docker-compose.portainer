@@ -3,7 +3,7 @@ version: '3.8'
 services:
   omg-tv-stremio-addon:
     image: node:16-slim
-    container_name: omg-tv-stremio-addon
+    container_name: omg-premium-tv
 
     environment:
       - PORT=7860
@@ -17,7 +17,7 @@ services:
         apt-get update && apt-get install -y git python3 python3-pip &&
         pip3 install requests &&
         rm -rf /tmp/repo &&
-        git clone --branch rc-1 https://github.com/mccoy88f/OMG-TV-Stremio-Addon.git /tmp/repo &&
+        git clone --branch main https://github.com/mccoy88f/OMG-Premium-TV.git /tmp/repo &&
         cp -r /tmp/repo/* /app/ &&
         mkdir -p /app/data /app/temp && 
         chmod 777 /app/temp &&
