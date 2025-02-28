@@ -192,6 +192,7 @@ Clicca su un canale per vedere:
 - ✅ Generazione playlist personalizzate
 - ✅ Aggiornamenti automatici
 - ✅ Backup e ripristino configurazione
+- Specifiche tecniche nel [wiki](https://github.com/mccoy88f/OMG-Premium-TV/wiki)
 
 ## 📱 Compatibilità
 
