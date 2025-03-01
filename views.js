@@ -266,10 +266,16 @@ const renderConfigPage = (protocol, host, query, manifest) => {
                            <div class="advanced-settings-content" id="advanced-settings-content">
                                <label>Proxy URL:</label>
                                <input type="url" name="proxy" value="${query.proxy || ''}">
-                               
+                              
                                <label>Proxy Password:</label>
                                <input type="password" name="proxy_pwd" value="${query.proxy_pwd || ''}">
-                               
+                              
+                               <label>Tipo di Proxy:</label>
+                               <select name="proxy_type" style="width: 100%; padding: 8px; margin-bottom: 10px; border-radius: 4px; border: 1px solid #666; background: #333; color: white;">
+                                   <option value="mediaflow" ${query.proxy_type !== 'smallprox' ? 'selected' : ''}>MediaFlow Proxy</option>
+                                   <option value="smallprox" ${query.proxy_type === 'smallprox' ? 'selected' : ''}>SmallProx</option>
+                               </select>
+                              
                                <label>
                                    <input type="checkbox" name="force_proxy" ${query.force_proxy === 'true' ? 'checked' : ''}>
                                    Forza Proxy
