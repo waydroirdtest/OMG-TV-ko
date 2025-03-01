@@ -117,7 +117,8 @@ const renderConfigPage = (protocol, host, query, manifest) => {
                .config-form input[type="text"],
                .config-form input[type="url"],
                .config-form input[type="password"],
-               .config-form input[type="file"] {
+               .config-form input[type="file"],
+               .config-form select {
                    width: 100%;
                    padding: 8px;
                    margin-bottom: 10px;
@@ -218,6 +219,13 @@ const renderConfigPage = (protocol, host, query, manifest) => {
                a:hover {
                    text-decoration: underline;
                }
+               .proxy-info {
+                   background: rgba(255,255,255,0.05);
+                   padding: 8px;
+                   border-radius: 4px;
+                   margin-top: 5px;
+                   font-size: 0.9em;
+               }
            </style>
        </head>
        <body>
@@ -266,16 +274,22 @@ const renderConfigPage = (protocol, host, query, manifest) => {
                            <div class="advanced-settings-content" id="advanced-settings-content">
                                <label>Proxy URL:</label>
                                <input type="url" name="proxy" value="${query.proxy || ''}">
-                              
+                               
                                <label>Proxy Password:</label>
                                <input type="password" name="proxy_pwd" value="${query.proxy_pwd || ''}">
-                              
+                               
                                <label>Tipo di Proxy:</label>
                                <select name="proxy_type" style="width: 100%; padding: 8px; margin-bottom: 10px; border-radius: 4px; border: 1px solid #666; background: #333; color: white;">
                                    <option value="mediaflow" ${query.proxy_type !== 'smallprox' ? 'selected' : ''}>MediaFlow Proxy</option>
                                    <option value="smallprox" ${query.proxy_type === 'smallprox' ? 'selected' : ''}>SmallProx</option>
                                </select>
-                              
+                               
+                               <div class="proxy-info">
+                                   <p><strong>Informazioni sui Proxy:</strong></p>
+                                   <p><strong>MediaFlow Proxy:</strong> Proxy predefinito, compatibile con MediaFlow.</p>
+                                   <p><strong>SmallProx:</strong> Proxy alternativo, più leggero e veloce.</p>
+                               </div>
+                               
                                <label>
                                    <input type="checkbox" name="force_proxy" ${query.force_proxy === 'true' ? 'checked' : ''}>
                                    Forza Proxy
@@ -396,7 +410,7 @@ const renderConfigPage = (protocol, host, query, manifest) => {
                            <div id="resolverForm">
                        
                                <div style="display: flex; gap: 10px; margin-top: 15px;">
-                                   <button onclick="downloadResolverScript()" style="flex: 1;">SCARICA SCRIPT</button>
+                                   <button onclick="downloadResolverScript()" style="flex: the    1;">SCARICA SCRIPT</button>
                                    <button onclick="createResolverTemplate()" style="flex: 1;">CREA TEMPLATE</button>
                                    <button onclick="checkResolverHealth()" style="flex: 1;">VERIFICA SCRIPT</button>
                                </div>
