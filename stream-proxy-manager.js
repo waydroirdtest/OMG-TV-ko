@@ -112,6 +112,18 @@ class StreamProxyManager {
             return null;
         }
     
+        // Determina il tipo di proxy da utilizzare
+        const proxyType = userConfig.proxy_type || 'mediaflow'; // Default: MediaFlow
+        
+        if (proxyType === 'smallprox') {
+            return this.buildSmallProxUrl(streamUrl, headers, userConfig);
+        } else {
+            // MediaFlow proxy (comportamento default)
+            return this.buildMediaFlowProxyUrl(streamUrl, headers, userConfig);
+        }
+    }
+    
+    async buildMediaFlowProxyUrl(streamUrl, headers = {}, userConfig = {}) {
         const baseUrl = userConfig.proxy.replace(/\/+$/, '');
         const params = new URLSearchParams({
             api_password: userConfig.proxy_pwd,
@@ -154,7 +166,56 @@ class StreamProxyManager {
     
         return proxyUrl;
     }
-
+    
+    async buildSmallProxUrl(streamUrl, headers = {}, userConfig = {}) {
+        const baseUrl = userConfig.proxy.replace(/\/+$/, '');
+        const params = new URLSearchParams();
+        
+        // Parametro URL obbligatorio
+        params.set('url', streamUrl);
+    
+        // Token di autorizzazione (se disponibile)
+        if (userConfig.proxy_pwd) {
+            params.set('token', userConfig.proxy_pwd);
+        }
+        
+        // Aggiungi gli headers come parametri con prefisso header_
+        const userAgent = headers['User-Agent'] || headers['user-agent'] || config.defaultUserAgent || 'Mozilla/5.0';
+        params.set('header_User-Agent', userAgent);
+        
+        // Gestione referer
+        let referer = headers['referer'] || headers['Referer'] || headers['referrer'] || headers['Referrer'];
+        if (referer) {
+            params.set('header_Referer', referer);
+        }
+        
+        // Gestione origin
+        let origin = headers['origin'] || headers['Origin'];
+        if (origin) {
+            params.set('header_Origin', origin);
+        }
+        
+        // Aggiungi altri header se presenti
+        Object.entries(headers).forEach(([key, value]) => {
+            if (!['User-Agent', 'user-agent', 'Referer', 'referer', 'Origin', 'origin'].includes(key)) {
+                params.set(`header_${key}`, value);
+            }
+        });
+        
+        // Determina l'endpoint in base al tipo di stream
+        let endpoint;
+        if (streamUrl.includes('.m3u8') || streamUrl.endsWith('.m3u')) {
+            endpoint = 'm3u';  // Per stream HLS .m3u8
+        } else if (streamUrl.endsWith('.mpd')) {
+            endpoint = 'dash'; // Per stream DASH .mpd
+        } else {
+            endpoint = 'ts';   // Per segmenti .ts o altri tipi di stream
+        }
+        
+        // Costruisci l'URL del proxy SmallProx
+        const proxyUrl = `${baseUrl}/proxy/${endpoint}?${params.toString()}`;
+        return proxyUrl;
+    }
 
     async getProxyStreams(input, userConfig = {}) {
         // Blocca solo gli URL che sono già proxy
@@ -209,10 +270,13 @@ class StreamProxyManager {
             }
     
             if (isHealthy) {
+                // Ottiene il nome del proxy da mostrare nell'interfaccia
+                const proxyName = userConfig.proxy_type === 'smallprox' ? 'SmallProx' : 'MediaFlow';
+                
                 // Aggiunge lo stream proxato all'array
                 streams.push({
                     name: input.name,
-                    title: `🌐 ${input.originalName}\n[Proxy ${streamType}]`,
+                    title: `🌐 ${input.originalName}\n[${proxyName} ${streamType}]`,
                     url: proxyUrl,
                     behaviorHints: {
                         notWebReady: false,
@@ -257,8 +321,6 @@ class StreamProxyManager {
     
         return streams;
     }
-
-
 }
 
 module.exports = () => new StreamProxyManager();
