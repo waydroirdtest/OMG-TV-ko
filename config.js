@@ -12,8 +12,8 @@ const baseConfig = {
     },
     epgSettings: {
         maxProgramsPerChannel: 50,
-        updateInterval: 6 * 60 * 60 * 1000,
-        cacheExpiry: 12 * 60 * 60 * 1000
+        updateInterval: 8 * 60 * 60 * 1000,
+        cacheExpiry: 24 * 60 * 60 * 1000
     },
     manifest: {
         id: 'org.mccoy88f.omgtv',
