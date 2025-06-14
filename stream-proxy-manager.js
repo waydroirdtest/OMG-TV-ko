@@ -111,67 +111,39 @@ class StreamProxyManager {
             console.warn('⚠️ buildProxyUrl: Parametri mancanti o non validi');
             return null;
         }
-
+    
         const baseUrl = userConfig.proxy.replace(/\/+$/, '');
         const params = new URLSearchParams({
             api_password: userConfig.proxy_pwd,
             d: streamUrl,
         });
-
-        // **CORREZIONE**: Controlla se gli headers sono già presenti nell'URL
-        const hasUserAgent = streamUrl.includes('h_User-Agent') || streamUrl.includes('h_user-agent');
-        const hasReferer = streamUrl.includes('h_Referer') || streamUrl.includes('h_referer');
-        const hasOrigin = streamUrl.includes('h_Origin') || streamUrl.includes('h_origin');
-
-        console.log(`🔍 Headers già presenti nell'URL:`);
-        console.log(`  User-Agent: ${hasUserAgent}`);
-        console.log(`  Referer: ${hasReferer}`);
-        console.log(`  Origin: ${hasOrigin}`);
-
-        // Aggiungi User-Agent solo se non è già presente
-        if (!hasUserAgent) {
-            const userAgent = headers['User-Agent'] || headers['user-agent'] || config.defaultUserAgent || 'Mozilla/5.0';
-            params.set('h_user-agent', userAgent);
-            console.log(`✅ Aggiunto User-Agent: ${userAgent}`);
-        } else {
-            console.log(`⚠️ User-Agent già presente nell'URL, non aggiunto`);
+    
+        // Assicurati di avere uno user agent valido
+        const userAgent = headers['User-Agent'] || headers['user-agent'] || config.defaultUserAgent || 'Mozilla/5.0';
+        params.set('h_user-agent', userAgent);
+    
+        // Gestione referer
+        let referer = headers['referer'] || headers['Referer'] || headers['referrer'] || headers['Referrer'];
+        if (referer) {
+            params.set('h_referer', referer);
         }
-
-        // Aggiungi Referer solo se non è già presente
-        if (!hasReferer) {
-            let referer = headers['referer'] || headers['Referer'] || headers['referrer'] || headers['Referrer'];
-            if (referer) {
-                params.set('h_referer', referer);
-                console.log(`✅ Aggiunto Referer: ${referer}`);
-            }
-        } else {
-            console.log(`⚠️ Referer già presente nell'URL, non aggiunto`);
+    
+        // Gestione origin
+        let origin = headers['origin'] || headers['Origin'];
+        if (origin) {
+            params.set('h_origin', origin);
         }
-
-        // Aggiungi Origin solo se non è già presente
-        if (!hasOrigin) {
-            let origin = headers['origin'] || headers['Origin'];
-            if (origin) {
-                params.set('h_origin', origin);
-                console.log(`✅ Aggiunto Origin: ${origin}`);
-            }
-        } else {
-            console.log(`⚠️ Origin già presente nell'URL, non aggiunto`);
-        }
-
-        // **CORREZIONE PRINCIPALE**: Determina il tipo di stream usando .includes() per .m3u8
+    
+        // Determina il tipo di stream senza seguire i redirect
         let streamType = 'HLS'; // Default
-        if (streamUrl.includes('.m3u8')) {  // <-- CORREZIONE: usa .includes() invece di .endsWith()
-            streamType = 'HLS';
-            console.log('✅ HLS rilevato tramite .includes(.m3u8)');
-        } else if (streamUrl.endsWith('.mpd')) {
+        if (streamUrl.endsWith('.mpd')) {
             streamType = 'DASH';
         } else if (streamUrl.endsWith('.mp4')) {
             streamType = 'HTTP';
         } else if (streamUrl.endsWith('.php') || streamUrl.includes('/stream/stream-') || streamUrl.includes('daddylive.dad') || streamUrl.includes('/extractor/video')) {
             streamType = 'PHP';
         }
-
+    
         // Costruisci l'URL del proxy basato sul tipo di stream
         let proxyUrl;
         if (streamType === 'HLS') {
@@ -183,10 +155,7 @@ class StreamProxyManager {
         } else {
             proxyUrl = `${baseUrl}/proxy/stream?${params.toString()}`;
         }
-
-        console.log(`🔧 Stream rilevato come: ${streamType}`);
-        console.log(`🔧 URL proxy generato: ${proxyUrl}`);
-
+    
         return proxyUrl;
     }
 
@@ -201,7 +170,7 @@ class StreamProxyManager {
             console.log('⚠️ Proxy non configurato per:', input.name);
             return [];
         }
-
+    
         let streams = [];
         
         try {
@@ -211,24 +180,39 @@ class StreamProxyManager {
             if (!headers['User-Agent'] && !headers['user-agent']) {
                 headers['User-Agent'] = config.defaultUserAgent;
             }
-
+    
             // Costruisce l'URL del proxy (questa chiamata già normalizza l'URL rimuovendo lo slash finale)
             let proxyUrl = await this.buildProxyUrl(input.url, headers, userConfig);
+    
+            // Verifica se il proxy è attivo e funzionante
+            let isHealthy = await this.checkProxyHealth(proxyUrl, headers);
+            
+            // Se il proxy non è sano, prova la versione con slash finale
+            if (!isHealthy) {
+                console.log(`⚠️ Proxy non valido, provo versione con slash finale per: ${input.url}`);
+                
+                // Aggiungi lo slash finale e riprova
+                const urlWithSlash = input.url.endsWith('/') ? input.url : input.url + '/';
+                const proxyUrlWithSlash = await this.buildProxyUrl(urlWithSlash, headers, userConfig);
+                const isHealthyWithSlash = await this.checkProxyHealth(proxyUrlWithSlash, headers);
+                
+                if (isHealthyWithSlash) {
+                    console.log(`✅ Versione con slash finale funzionante per: ${input.url}`);
+                    proxyUrl = proxyUrlWithSlash;
+                    isHealthy = true;
                 }
             }
             
-            // **CORREZIONE**: Determina il tipo di stream usando .includes() per .m3u8
+            // Determina il tipo di stream (HLS, DASH, HTTP o PHP)
             let streamType = 'HLS'; // Default
-            if (input.url.includes('.m3u8')) {  // <-- CORREZIONE: usa .includes() invece di .endsWith()
-                streamType = 'HLS';
-            } else if (input.url.endsWith('.mpd')) {
+            if (input.url.endsWith('.mpd')) {
                 streamType = 'DASH';
             } else if (input.url.endsWith('.mp4')) {
                 streamType = 'HTTP';
             } else if (input.url.endsWith('.php') || input.url.includes('/stream/stream-') || input.url.includes('daddylive.dad') || input.url.includes('/extractor/video')) {
                 streamType = 'PHP';
             }
-
+    
             if (isHealthy) {
                 // Aggiunge lo stream proxato all'array
                 streams.push({
@@ -240,8 +224,6 @@ class StreamProxyManager {
                         bingeGroup: "tv"
                     }
                 });
-                
-                console.log(`✅ Stream proxy aggiunto: ${input.name} (${streamType})`);
             } else {
                 console.log(`⚠️ Proxy non valido per: ${input.url}, mantengo stream originale`);
                 
@@ -277,7 +259,7 @@ class StreamProxyManager {
                 });
             }
         }
-
+    
         return streams;
     }
 }
