@@ -25,95 +25,38 @@ class StreamProxyManager {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    // **CORREZIONE SPECIFICA**: Normalizza URL VAVOO malformati
-    normalizeVavooUrl(url) {
-        if (!url || typeof url !== 'string') {
-            return url;
-        }
-
-        // Controlla se è un URL VAVOO con formato malformato
-        if (url.includes('vavoo.to') && url.includes('.m3u8&')) {
-            console.log(`🔧 Rilevato URL VAVOO malformato: ${url}`);
-            
-            // Trova la posizione di .m3u8 e sostituisci il primo & con ?
-            const m3u8Index = url.indexOf('.m3u8');
-            if (m3u8Index !== -1) {
-                const beforeM3u8 = url.substring(0, m3u8Index + 5); // Include .m3u8
-                const afterM3u8 = url.substring(m3u8Index + 5);
-                
-                if (afterM3u8.startsWith('&')) {
-                    const normalizedUrl = beforeM3u8 + '?' + afterM3u8.substring(1);
-                    console.log(`✅ URL normalizzato: ${normalizedUrl}`);
-                    return normalizedUrl;
-                }
-            }
-        }
-
-        return url;
-    }
-
-    // **FUNZIONE MIGLIORATA**: Rilevamento del tipo di stream con gestione URL malformati
-    detectStreamType(url) {
-        if (!url || typeof url !== 'string') {
+    // **FUNZIONE CHIAVE**: Rilevamento corretto del tipo di stream
+    detectStreamType(streamUrl) {
+        if (!streamUrl || typeof streamUrl !== 'string') {
             return 'HLS';
         }
-        
-        // Prima normalizza l'URL se necessario
-        const normalizedUrl = this.normalizeVavooUrl(url);
-        
-        try {
-            const urlObj = new URL(normalizedUrl);
-            const pathname = urlObj.pathname.toLowerCase();
-            
-            console.log(`🔍 Analizzando URL normalizzato: ${normalizedUrl}`);
-            console.log(`🔍 Pathname estratto: ${pathname}`);
-            
-            // Controllo per HLS
-            if (pathname.includes('.m3u8')) {
-                console.log(`✅ HLS rilevato tramite pathname`);
-                return 'HLS';
-            }
-            
-            // Altri tipi di stream
-            if (pathname.endsWith('.mpd')) {
-                return 'DASH';
-            }
-            
-            if (pathname.endsWith('.mp4')) {
-                return 'HTTP';
-            }
-            
-            if (pathname.endsWith('.php') || 
-                normalizedUrl.includes('/stream/stream-') || 
-                normalizedUrl.includes('daddylive.dad') || 
-                normalizedUrl.includes('/extractor/video')) {
-                return 'PHP';
-            }
-            
-            return 'HLS';
-            
-        } catch (error) {
-            // Fallback: controlla l'URL originale come stringa
-            console.warn(`⚠️ Errore parsing URL, uso fallback: ${error.message}`);
-            
-            if (url.includes('.m3u8')) {
-                console.log(`✅ HLS rilevato tramite fallback`);
-                return 'HLS';
-            }
-            if (url.includes('.mpd')) {
-                return 'DASH';
-            }
-            if (url.includes('.mp4')) {
-                return 'HTTP';
-            }
-            if (url.includes('.php') || 
-                url.includes('/stream/stream-') || 
-                url.includes('daddylive.dad') || 
-                url.includes('/extractor/video')) {
-                return 'PHP';
-            }
+
+        console.log(`🔍 Analizzando URL: ${streamUrl}`);
+
+        // **CORREZIONE PRINCIPALE**: Controlla se l'URL contiene .m3u8 ovunque
+        if (streamUrl.includes('.m3u8')) {
+            console.log(`✅ HLS rilevato - URL contiene .m3u8`);
             return 'HLS';
         }
+
+        // Altri controlli per tipi di stream
+        if (streamUrl.includes('.mpd')) {
+            return 'DASH';
+        }
+
+        if (streamUrl.includes('.mp4')) {
+            return 'HTTP';
+        }
+
+        if (streamUrl.includes('.php') || 
+            streamUrl.includes('/stream/stream-') || 
+            streamUrl.includes('daddylive.dad') || 
+            streamUrl.includes('/extractor/video')) {
+            return 'PHP';
+        }
+
+        // Default per stream non riconosciuti
+        return 'HLS';
     }
 
     async checkProxyHealth(proxyUrl, headers = {}) {
@@ -190,13 +133,10 @@ class StreamProxyManager {
             return null;
         }
 
-        // **CORREZIONE PRINCIPALE**: Normalizza l'URL prima di elaborarlo
-        const normalizedStreamUrl = this.normalizeVavooUrl(streamUrl);
-        
         const baseUrl = userConfig.proxy.replace(/\/+$/, '');
         const params = new URLSearchParams({
             api_password: userConfig.proxy_pwd,
-            d: normalizedStreamUrl, // Usa l'URL normalizzato
+            d: streamUrl,
         });
 
         const userAgent = headers['User-Agent'] || headers['user-agent'] || config.defaultUserAgent || 'Mozilla/5.0';
@@ -212,7 +152,7 @@ class StreamProxyManager {
             params.set('h_origin', origin);
         }
 
-        // Usa la funzione detectStreamType che ora gestisce la normalizzazione
+        // **CORREZIONE**: Usa la nuova funzione detectStreamType
         let streamType = this.detectStreamType(streamUrl);
 
         let proxyUrl;
@@ -227,10 +167,8 @@ class StreamProxyManager {
         }
 
         console.log(`🔧 Stream rilevato come: ${streamType}`);
-        console.log(`🔧 URL originale: ${streamUrl}`);
-        console.log(`🔧 URL normalizzato: ${normalizedStreamUrl}`);
         console.log(`🔧 URL proxy generato: ${proxyUrl}`);
-        
+
         return proxyUrl;
     }
 
@@ -271,6 +209,7 @@ class StreamProxyManager {
                 }
             }
             
+            // **CORREZIONE**: Usa la nuova funzione detectStreamType
             let streamType = this.detectStreamType(input.url);
 
             if (isHealthy) {
