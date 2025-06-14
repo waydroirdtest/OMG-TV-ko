@@ -35,12 +35,13 @@ class StreamProxyManager {
         try {
             const urlObj = new URL(url);
             const pathname = urlObj.pathname.toLowerCase();
-            const search = urlObj.search.toLowerCase();
-            const fullUrl = url.toLowerCase();
             
-            // Controllo prioritario per HLS - controlla sia pathname che URL completo
-            if (pathname.includes('.m3u8') || search.includes('m3u8') || fullUrl.includes('.m3u8')) {
-                console.log(`🎯 HLS rilevato per: ${url}`);
+            console.log(`🔍 Analizzando URL: ${url}`);
+            console.log(`🔍 Pathname estratto: ${pathname}`);
+            
+            // Controllo prioritario per HLS - controlla se il pathname contiene .m3u8
+            if (pathname.includes('.m3u8')) {
+                console.log(`✅ HLS rilevato tramite pathname`);
                 return 'HLS';
             }
             
@@ -64,10 +65,22 @@ class StreamProxyManager {
             
         } catch (error) {
             // Fallback con controllo semplice della stringa
-            console.warn(`⚠️ Errore parsing URL, uso fallback per: ${url}`);
+            console.warn(`⚠️ Errore parsing URL, uso fallback: ${error.message}`);
             if (url.includes('.m3u8')) {
-                console.log(`🎯 HLS rilevato (fallback) per: ${url}`);
+                console.log(`✅ HLS rilevato tramite fallback`);
                 return 'HLS';
+            }
+            if (url.includes('.mpd')) {
+                return 'DASH';
+            }
+            if (url.includes('.mp4')) {
+                return 'HTTP';
+            }
+            if (url.includes('.php') || 
+                url.includes('/stream/stream-') || 
+                url.includes('daddylive.dad') || 
+                url.includes('/extractor/video')) {
+                return 'PHP';
             }
             return 'HLS'; // Default
         }
@@ -196,7 +209,9 @@ class StreamProxyManager {
             proxyUrl = `${baseUrl}/proxy/stream?${params.toString()}`;
         }
 
-        console.log(`🔧 Costruito proxy URL per ${streamType}: ${proxyUrl}`);
+        console.log(`🔧 Stream rilevato come: ${streamType}`);
+        console.log(`🔧 URL proxy generato: ${proxyUrl}`);
+        
         return proxyUrl;
     }
 
