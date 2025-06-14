@@ -26,6 +26,49 @@ class StreamProxyManager {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
+    // Funzione helper per rilevare il tipo di stream
+    detectStreamType(url) {
+        if (!url || typeof url !== 'string') {
+            return 'HLS'; // Default
+        }
+        
+        try {
+            const urlObj = new URL(url);
+            const pathname = urlObj.pathname.toLowerCase();
+            const search = urlObj.search.toLowerCase();
+            
+            // Controllo prioritario per HLS
+            if (pathname.includes('.m3u8') || search.includes('m3u8')) {
+                return 'HLS';
+            }
+            
+            // Altri tipi di stream
+            if (pathname.endsWith('.mpd')) {
+                return 'DASH';
+            }
+            
+            if (pathname.endsWith('.mp4')) {
+                return 'HTTP';
+            }
+            
+            if (pathname.endsWith('.php') || 
+                url.includes('/stream/stream-') || 
+                url.includes('daddylive.dad') || 
+                url.includes('/extractor/video')) {
+                return 'PHP';
+            }
+            
+            return 'HLS'; // Default per stream non riconosciuti
+            
+        } catch (error) {
+            // Fallback con controllo semplice della stringa
+            if (url.includes('.m3u8')) {
+                return 'HLS';
+            }
+            return 'HLS'; // Default
+        }
+    }
+
     async checkProxyHealth(proxyUrl, headers = {}) {
         const cacheKey = proxyUrl;
         const now = Date.now();
@@ -111,39 +154,32 @@ class StreamProxyManager {
             console.warn('⚠️ buildProxyUrl: Parametri mancanti o non validi');
             return null;
         }
-    
+
         const baseUrl = userConfig.proxy.replace(/\/+$/, '');
         const params = new URLSearchParams({
             api_password: userConfig.proxy_pwd,
             d: streamUrl,
         });
-    
+
         // Assicurati di avere uno user agent valido
         const userAgent = headers['User-Agent'] || headers['user-agent'] || config.defaultUserAgent || 'Mozilla/5.0';
         params.set('h_user-agent', userAgent);
-    
+
         // Gestione referer
         let referer = headers['referer'] || headers['Referer'] || headers['referrer'] || headers['Referrer'];
         if (referer) {
             params.set('h_referer', referer);
         }
-    
+
         // Gestione origin
         let origin = headers['origin'] || headers['Origin'];
         if (origin) {
             params.set('h_origin', origin);
         }
-    
-        // Determina il tipo di stream senza seguire i redirect
-        let streamType = 'HLS'; // Default
-        if (streamUrl.endsWith('.mpd')) {
-            streamType = 'DASH';
-        } else if (streamUrl.endsWith('.mp4')) {
-            streamType = 'HTTP';
-        } else if (streamUrl.endsWith('.php') || streamUrl.includes('/stream/stream-') || streamUrl.includes('daddylive.dad') || streamUrl.includes('/extractor/video')) {
-            streamType = 'PHP';
-        }
-    
+
+        // **MODIFICA PRINCIPALE**: Determina il tipo di stream con logica migliorata
+        let streamType = this.detectStreamType(streamUrl);
+
         // Costruisci l'URL del proxy basato sul tipo di stream
         let proxyUrl;
         if (streamType === 'HLS') {
@@ -155,7 +191,8 @@ class StreamProxyManager {
         } else {
             proxyUrl = `${baseUrl}/proxy/stream?${params.toString()}`;
         }
-    
+
+        console.log(`🔍 Stream rilevato come: ${streamType} per URL: ${streamUrl}`);
         return proxyUrl;
     }
 
@@ -170,7 +207,7 @@ class StreamProxyManager {
             console.log('⚠️ Proxy non configurato per:', input.name);
             return [];
         }
-    
+
         let streams = [];
         
         try {
@@ -180,10 +217,10 @@ class StreamProxyManager {
             if (!headers['User-Agent'] && !headers['user-agent']) {
                 headers['User-Agent'] = config.defaultUserAgent;
             }
-    
+
             // Costruisce l'URL del proxy (questa chiamata già normalizza l'URL rimuovendo lo slash finale)
             let proxyUrl = await this.buildProxyUrl(input.url, headers, userConfig);
-    
+
             // Verifica se il proxy è attivo e funzionante
             let isHealthy = await this.checkProxyHealth(proxyUrl, headers);
             
@@ -203,16 +240,9 @@ class StreamProxyManager {
                 }
             }
             
-            // Determina il tipo di stream (HLS, DASH, HTTP o PHP)
-            let streamType = 'HLS'; // Default
-            if (input.url.endsWith('.mpd')) {
-                streamType = 'DASH';
-            } else if (input.url.endsWith('.mp4')) {
-                streamType = 'HTTP';
-            } else if (input.url.endsWith('.php') || input.url.includes('/stream/stream-') || input.url.includes('daddylive.dad') || input.url.includes('/extractor/video')) {
-                streamType = 'PHP';
-            }
-    
+            // Determina il tipo di stream usando la nuova logica
+            let streamType = this.detectStreamType(input.url);
+
             if (isHealthy) {
                 // Aggiunge lo stream proxato all'array
                 streams.push({
@@ -259,7 +289,7 @@ class StreamProxyManager {
                 });
             }
         }
-    
+
         return streams;
     }
 }
