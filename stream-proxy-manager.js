@@ -140,6 +140,8 @@ class StreamProxyManager {
             streamType = 'DASH';
         } else if (streamUrl.endsWith('.mp4')) {
             streamType = 'HTTP';
+        } else if (streamUrl.endsWith('.php') || streamUrl.includes('/stream/stream-') || streamUrl.includes('daddylive.dad') || streamUrl.includes('/extractor/video')) {
+            streamType = 'PHP';
         }
     
         // Costruisci l'URL del proxy basato sul tipo di stream
@@ -148,13 +150,14 @@ class StreamProxyManager {
             proxyUrl = `${baseUrl}/proxy/hls/manifest.m3u8?${params.toString()}`;
         } else if (streamType === 'DASH') {
             proxyUrl = `${baseUrl}/proxy/mpd/manifest.m3u8?${params.toString()}`;
+        } else if (streamType === 'PHP') {
+            proxyUrl = `${baseUrl}/extractor/video?host=DLHD&redirect_stream=true&${params.toString()}`;
         } else {
             proxyUrl = `${baseUrl}/proxy/stream?${params.toString()}`;
         }
     
         return proxyUrl;
     }
-
 
     async getProxyStreams(input, userConfig = {}) {
         // Blocca solo gli URL che sono già proxy
@@ -200,12 +203,14 @@ class StreamProxyManager {
                 }
             }
             
-            // Determina il tipo di stream (HLS, DASH o HTTP)
+            // Determina il tipo di stream (HLS, DASH, HTTP o PHP)
             let streamType = 'HLS'; // Default
             if (input.url.endsWith('.mpd')) {
                 streamType = 'DASH';
             } else if (input.url.endsWith('.mp4')) {
                 streamType = 'HTTP';
+            } else if (input.url.endsWith('.php') || input.url.includes('/stream/stream-') || input.url.includes('daddylive.dad') || input.url.includes('/extractor/video')) {
+                streamType = 'PHP';
             }
     
             if (isHealthy) {
@@ -257,8 +262,6 @@ class StreamProxyManager {
     
         return streams;
     }
-
-
 }
 
 module.exports = () => new StreamProxyManager();
