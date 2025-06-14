@@ -214,23 +214,6 @@ class StreamProxyManager {
 
             // Costruisce l'URL del proxy (questa chiamata già normalizza l'URL rimuovendo lo slash finale)
             let proxyUrl = await this.buildProxyUrl(input.url, headers, userConfig);
-
-            // Verifica se il proxy è attivo e funzionante
-            let isHealthy = await this.checkProxyHealth(proxyUrl, headers);
-            
-            // Se il proxy non è sano, prova la versione con slash finale
-            if (!isHealthy) {
-                console.log(`⚠️ Proxy non valido, provo versione con slash finale per: ${input.url}`);
-                
-                // Aggiungi lo slash finale e riprova
-                const urlWithSlash = input.url.endsWith('/') ? input.url : input.url + '/';
-                const proxyUrlWithSlash = await this.buildProxyUrl(urlWithSlash, headers, userConfig);
-                const isHealthyWithSlash = await this.checkProxyHealth(proxyUrlWithSlash, headers);
-                
-                if (isHealthyWithSlash) {
-                    console.log(`✅ Versione con slash finale funzionante per: ${input.url}`);
-                    proxyUrl = proxyUrlWithSlash;
-                    isHealthy = true;
                 }
             }
             
