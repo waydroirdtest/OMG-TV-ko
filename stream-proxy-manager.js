@@ -4,11 +4,11 @@ const config = require('./config');
 
 class StreamProxyManager {
     constructor() {
-        this.proxyCache = new Map();  // Usato per memorizzare lo stato di salute dei proxy
-        this.lastCheck = new Map();   // Usato per memorizzare l'ultimo controllo di salute
-        this.CACHE_DURATION = 1 * 60 * 1000; // 1 minuto
-        this.MAX_RETRY_ATTEMPTS = 3; // Numero massimo di tentativi
-        this.RETRY_DELAY = 500; // Intervallo tra i tentativi in ms
+        this.proxyCache = new Map();
+        this.lastCheck = new Map();
+        this.CACHE_DURATION = 1 * 60 * 1000;
+        this.MAX_RETRY_ATTEMPTS = 3;
+        this.RETRY_DELAY = 500;
     }
 
     async validateProxyUrl(url) {
@@ -21,25 +21,54 @@ class StreamProxyManager {
         }
     }
 
-    // Funzione di sleep per il ritardo tra i tentativi
     sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    // **FUNZIONE CHIAVE**: Rilevamento corretto del tipo di stream
+    // **CORREZIONE SPECIFICA**: Normalizza URL VAVOO malformati
+    normalizeVavooUrl(url) {
+        if (!url || typeof url !== 'string') {
+            return url;
+        }
+
+        // Controlla se è un URL VAVOO con formato malformato
+        if (url.includes('vavoo.to') && url.includes('.m3u8&')) {
+            console.log(`🔧 Rilevato URL VAVOO malformato: ${url}`);
+            
+            // Trova la posizione di .m3u8 e sostituisci il primo & con ?
+            const m3u8Index = url.indexOf('.m3u8');
+            if (m3u8Index !== -1) {
+                const beforeM3u8 = url.substring(0, m3u8Index + 5); // Include .m3u8
+                const afterM3u8 = url.substring(m3u8Index + 5);
+                
+                if (afterM3u8.startsWith('&')) {
+                    const normalizedUrl = beforeM3u8 + '?' + afterM3u8.substring(1);
+                    console.log(`✅ URL normalizzato: ${normalizedUrl}`);
+                    return normalizedUrl;
+                }
+            }
+        }
+
+        return url;
+    }
+
+    // **FUNZIONE MIGLIORATA**: Rilevamento del tipo di stream con gestione URL malformati
     detectStreamType(url) {
         if (!url || typeof url !== 'string') {
-            return 'HLS'; // Default
+            return 'HLS';
         }
         
+        // Prima normalizza l'URL se necessario
+        const normalizedUrl = this.normalizeVavooUrl(url);
+        
         try {
-            const urlObj = new URL(url);
+            const urlObj = new URL(normalizedUrl);
             const pathname = urlObj.pathname.toLowerCase();
             
-            console.log(`🔍 Analizzando URL: ${url}`);
+            console.log(`🔍 Analizzando URL normalizzato: ${normalizedUrl}`);
             console.log(`🔍 Pathname estratto: ${pathname}`);
             
-            // Controllo prioritario per HLS - controlla se il pathname contiene .m3u8
+            // Controllo per HLS
             if (pathname.includes('.m3u8')) {
                 console.log(`✅ HLS rilevato tramite pathname`);
                 return 'HLS';
@@ -55,17 +84,18 @@ class StreamProxyManager {
             }
             
             if (pathname.endsWith('.php') || 
-                url.includes('/stream/stream-') || 
-                url.includes('daddylive.dad') || 
-                url.includes('/extractor/video')) {
+                normalizedUrl.includes('/stream/stream-') || 
+                normalizedUrl.includes('daddylive.dad') || 
+                normalizedUrl.includes('/extractor/video')) {
                 return 'PHP';
             }
             
-            return 'HLS'; // Default per stream non riconosciuti
+            return 'HLS';
             
         } catch (error) {
-            // Fallback con controllo semplice della stringa
+            // Fallback: controlla l'URL originale come stringa
             console.warn(`⚠️ Errore parsing URL, uso fallback: ${error.message}`);
+            
             if (url.includes('.m3u8')) {
                 console.log(`✅ HLS rilevato tramite fallback`);
                 return 'HLS';
@@ -82,7 +112,7 @@ class StreamProxyManager {
                 url.includes('/extractor/video')) {
                 return 'PHP';
             }
-            return 'HLS'; // Default
+            return 'HLS';
         }
     }
 
@@ -91,12 +121,10 @@ class StreamProxyManager {
         const now = Date.now();
         const lastCheckTime = this.lastCheck.get(cacheKey);
 
-        // Se abbiamo un check recente, usiamo quello
         if (lastCheckTime && (now - lastCheckTime) < this.CACHE_DURATION) {
             return this.proxyCache.get(cacheKey);
         }
 
-        // Prepara gli headers finali per la richiesta
         const finalHeaders = {
             'User-Agent': headers['User-Agent'] || headers['user-agent'] || config.defaultUserAgent
         };
@@ -110,7 +138,6 @@ class StreamProxyManager {
             finalHeaders['Origin'] = headers['origin'] || headers['Origin'];
         }
 
-        // Implementazione dei tentativi multipli
         let attempts = 0;
         let isHealthy = false;
         let lastError = null;
@@ -126,40 +153,31 @@ class StreamProxyManager {
                 });
                 
                 isHealthy = response.status < 400;
-                
 
             } catch (error) {
                 lastError = error;
-
                 
-                // Se non è l'ultimo tentativo, aspetta prima di riprovare
                 if (attempts < this.MAX_RETRY_ATTEMPTS) {
                     await this.sleep(this.RETRY_DELAY);
                 }
             }
         }
 
-        // Aggiorna la cache solo dopo tutti i tentativi
         this.proxyCache.set(cacheKey, isHealthy);
         this.lastCheck.set(cacheKey, now);
         
         if (!isHealthy) {
-            // Log dettagliato in caso di fallimento di tutti i tentativi
             console.error('❌ ERRORE PROXY HEALTH CHECK - Tutti i tentativi falliti:');
             
             if (lastError) {
                 console.error(`  Ultimo errore: ${lastError.message}`);
                 console.error(`  Codice errore: ${lastError.code || 'N/A'}`);
-                
-                // Log dello stack trace per debug avanzato
             } else {
                 console.error(`  Nessun errore specifico rilevato, controllo fallito senza eccezioni`);
             }
             
-            // Log degli headers usati nella richiesta
             console.error('============================================================');
         } else if (attempts > 1) {
-            // Log di successo dopo tentativi multipli
             console.log(`✅ Proxy verificato con successo dopo ${attempts} tentativi`);
         }
         
@@ -172,32 +190,31 @@ class StreamProxyManager {
             return null;
         }
 
+        // **CORREZIONE PRINCIPALE**: Normalizza l'URL prima di elaborarlo
+        const normalizedStreamUrl = this.normalizeVavooUrl(streamUrl);
+        
         const baseUrl = userConfig.proxy.replace(/\/+$/, '');
         const params = new URLSearchParams({
             api_password: userConfig.proxy_pwd,
-            d: streamUrl,
+            d: normalizedStreamUrl, // Usa l'URL normalizzato
         });
 
-        // Assicurati di avere uno user agent valido
         const userAgent = headers['User-Agent'] || headers['user-agent'] || config.defaultUserAgent || 'Mozilla/5.0';
         params.set('h_user-agent', userAgent);
 
-        // Gestione referer
         let referer = headers['referer'] || headers['Referer'] || headers['referrer'] || headers['Referrer'];
         if (referer) {
             params.set('h_referer', referer);
         }
 
-        // Gestione origin
         let origin = headers['origin'] || headers['Origin'];
         if (origin) {
             params.set('h_origin', origin);
         }
 
-        // **CORREZIONE PRINCIPALE**: Usa la funzione detectStreamType migliorata
+        // Usa la funzione detectStreamType che ora gestisce la normalizzazione
         let streamType = this.detectStreamType(streamUrl);
 
-        // Costruisci l'URL del proxy basato sul tipo di stream
         let proxyUrl;
         if (streamType === 'HLS') {
             proxyUrl = `${baseUrl}/proxy/hls/manifest.m3u8?${params.toString()}`;
@@ -210,18 +227,18 @@ class StreamProxyManager {
         }
 
         console.log(`🔧 Stream rilevato come: ${streamType}`);
+        console.log(`🔧 URL originale: ${streamUrl}`);
+        console.log(`🔧 URL normalizzato: ${normalizedStreamUrl}`);
         console.log(`🔧 URL proxy generato: ${proxyUrl}`);
         
         return proxyUrl;
     }
 
     async getProxyStreams(input, userConfig = {}) {
-        // Blocca solo gli URL che sono già proxy
         if (input.url.includes(userConfig.proxy)) {
             return [];
         }
         
-        // Se il proxy non è configurato, interrompe l'elaborazione
         if (!userConfig.proxy || !userConfig.proxy_pwd) {
             console.log('⚠️ Proxy non configurato per:', input.name);
             return [];
@@ -232,22 +249,17 @@ class StreamProxyManager {
         try {
             const headers = input.headers || {};
             
-            // Assicura che lo User-Agent sia impostato
             if (!headers['User-Agent'] && !headers['user-agent']) {
                 headers['User-Agent'] = config.defaultUserAgent;
             }
 
-            // Costruisce l'URL del proxy (questa chiamata già normalizza l'URL rimuovendo lo slash finale)
             let proxyUrl = await this.buildProxyUrl(input.url, headers, userConfig);
 
-            // Verifica se il proxy è attivo e funzionante
             let isHealthy = await this.checkProxyHealth(proxyUrl, headers);
             
-            // Se il proxy non è sano, prova la versione con slash finale
             if (!isHealthy) {
                 console.log(`⚠️ Proxy non valido, provo versione con slash finale per: ${input.url}`);
                 
-                // Aggiungi lo slash finale e riprova
                 const urlWithSlash = input.url.endsWith('/') ? input.url : input.url + '/';
                 const proxyUrlWithSlash = await this.buildProxyUrl(urlWithSlash, headers, userConfig);
                 const isHealthyWithSlash = await this.checkProxyHealth(proxyUrlWithSlash, headers);
@@ -259,11 +271,9 @@ class StreamProxyManager {
                 }
             }
             
-            // **CORREZIONE**: Usa la stessa funzione detectStreamType per coerenza
             let streamType = this.detectStreamType(input.url);
 
             if (isHealthy) {
-                // Aggiunge lo stream proxato all'array
                 streams.push({
                     name: input.name,
                     title: `🌐 ${input.originalName}\n[Proxy ${streamType}]`,
@@ -278,7 +288,6 @@ class StreamProxyManager {
             } else {
                 console.log(`⚠️ Proxy non valido per: ${input.url}, mantengo stream originale`);
                 
-                // Aggiungi lo stream originale se il proxy non funziona
                 if (userConfig.force_proxy === 'true') {
                     streams.push({
                         name: input.name,
@@ -296,7 +305,6 @@ class StreamProxyManager {
         } catch (error) {
             console.error('❌ Errore durante l\'elaborazione del proxy:', error.message);
             
-            // In caso di errore, aggiungi lo stream originale SOLO se force_proxy è attivo
             if (userConfig.force_proxy === 'true') {
                 streams.push({
                     name: input.name,
