@@ -26,7 +26,7 @@ class StreamProxyManager {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    // Funzione helper per rilevare il tipo di stream
+    // **FUNZIONE CHIAVE**: Rilevamento corretto del tipo di stream
     detectStreamType(url) {
         if (!url || typeof url !== 'string') {
             return 'HLS'; // Default
@@ -36,9 +36,11 @@ class StreamProxyManager {
             const urlObj = new URL(url);
             const pathname = urlObj.pathname.toLowerCase();
             const search = urlObj.search.toLowerCase();
+            const fullUrl = url.toLowerCase();
             
-            // Controllo prioritario per HLS
-            if (pathname.includes('.m3u8') || search.includes('m3u8')) {
+            // Controllo prioritario per HLS - controlla sia pathname che URL completo
+            if (pathname.includes('.m3u8') || search.includes('m3u8') || fullUrl.includes('.m3u8')) {
+                console.log(`🎯 HLS rilevato per: ${url}`);
                 return 'HLS';
             }
             
@@ -62,7 +64,9 @@ class StreamProxyManager {
             
         } catch (error) {
             // Fallback con controllo semplice della stringa
+            console.warn(`⚠️ Errore parsing URL, uso fallback per: ${url}`);
             if (url.includes('.m3u8')) {
+                console.log(`🎯 HLS rilevato (fallback) per: ${url}`);
                 return 'HLS';
             }
             return 'HLS'; // Default
@@ -177,7 +181,7 @@ class StreamProxyManager {
             params.set('h_origin', origin);
         }
 
-        // **MODIFICA PRINCIPALE**: Determina il tipo di stream con logica migliorata
+        // **CORREZIONE PRINCIPALE**: Usa la funzione detectStreamType migliorata
         let streamType = this.detectStreamType(streamUrl);
 
         // Costruisci l'URL del proxy basato sul tipo di stream
@@ -192,7 +196,7 @@ class StreamProxyManager {
             proxyUrl = `${baseUrl}/proxy/stream?${params.toString()}`;
         }
 
-        console.log(`🔍 Stream rilevato come: ${streamType} per URL: ${streamUrl}`);
+        console.log(`🔧 Costruito proxy URL per ${streamType}: ${proxyUrl}`);
         return proxyUrl;
     }
 
@@ -240,7 +244,7 @@ class StreamProxyManager {
                 }
             }
             
-            // Determina il tipo di stream usando la nuova logica
+            // **CORREZIONE**: Usa la stessa funzione detectStreamType per coerenza
             let streamType = this.detectStreamType(input.url);
 
             if (isHealthy) {
@@ -254,6 +258,8 @@ class StreamProxyManager {
                         bingeGroup: "tv"
                     }
                 });
+                
+                console.log(`✅ Stream proxy aggiunto: ${input.name} (${streamType})`);
             } else {
                 console.log(`⚠️ Proxy non valido per: ${input.url}, mantengo stream originale`);
                 
