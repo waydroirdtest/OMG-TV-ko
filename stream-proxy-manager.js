@@ -9,6 +9,8 @@ class StreamProxyManager {
         this.CACHE_DURATION = 1 * 60 * 1000; // 1 minuto
         this.MAX_RETRY_ATTEMPTS = 3; // Numero massimo di tentativi
         this.RETRY_DELAY = 500; // Intervallo tra i tentativi in ms
+        // Domini sempre esclusi dal proxy
+        this.EXCLUDED_DOMAINS = ['pluto.tv'];
     }
 
     async validateProxyUrl(url) {
@@ -163,6 +165,28 @@ class StreamProxyManager {
         // Blocca solo gli URL che sono già proxy
         if (input.url.includes(userConfig.proxy)) {
             return [];
+        }
+        
+        // Escludi domini specifici dal proxy (anche con Force Proxy abilitato)
+        const excludedDomains = [
+            ...this.EXCLUDED_DOMAINS,
+            ...(userConfig.excluded_domains || [])
+        ];
+        
+        const shouldExclude = excludedDomains.some(domain => input.url.includes(domain));
+        
+        if (shouldExclude) {
+            console.log(`⚠️ Dominio escluso dal proxy: ${input.url}`);
+            return [{
+                name: input.name,
+                title: `${input.originalName}`,
+                url: input.url,
+                headers: input.headers,
+                behaviorHints: {
+                    notWebReady: false,
+                    bingeGroup: "tv"
+                }
+            }];
         }
         
         // Se il proxy non è configurato, interrompe l'elaborazione
