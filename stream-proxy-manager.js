@@ -142,7 +142,7 @@ class StreamProxyManager {
             streamType = 'DASH';
         } else if (streamUrl.endsWith('.mp4')) {
             streamType = 'HTTP';
-        } else if (streamUrl.endsWith('.php') || streamUrl.includes('/stream/stream-') || streamUrl.includes('daddylive.dad') || streamUrl.includes('/extractor/video')) {
+        } else if (streamUrl.endsWith('.php')) {
             streamType = 'PHP';
         }
     
