@@ -17,8 +17,8 @@ const baseConfig = {
     },
     manifest: {
         id: 'org.mccoy88f.omgtv',
-        version: '1.0.0',
-        name: 'OMG TV',
+        version: '1.0.1',
+        name: 'OMG TV-K',
         description: 'Modalita provvisoria, installazione con errori, attivo mod. provvisoria',
         logo: 'https://github.com/mccoy88f/OMG-TV-Stremio-Addon/blob/main/tv.png?raw=true',
         resources: ['stream', 'catalog', 'meta'],
