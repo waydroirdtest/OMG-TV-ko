@@ -6,12 +6,10 @@ services:
     container_name: omg-premium-tv
 
     environment:
-      - PORT=7860
+      - PORT=10000
       - HOST=0.0.0.0
       
     working_dir: /app
-    volumes:
-      - .:/app # Monta la directory corrente nel container (opzionale, se vuoi lavorare con file locali)
     command: >
       sh -c "
         apt-get update && apt-get install -y git python3 python3-pip &&
