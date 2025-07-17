@@ -11,6 +11,9 @@ services:
       
     working_dir: /app
 
+#    volumes:
+#      - .:/app # Monta la directory corrente nel container (opzionale, se vuoi lavorare con file locali)
+
     ports:
       - "10000:10000"
 
