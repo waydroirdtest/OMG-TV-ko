@@ -179,7 +179,7 @@ class StreamProxyManager {
             console.log(`⚠️ Dominio escluso dal proxy: ${input.url}`);
             return [{
                 name: input.name,
-                title: `${input.originalName} [ITA]`,
+                title: `${input.originalName}`,
                 url: input.url,
                 headers: input.headers,
                 language: 'Italiana',
@@ -242,7 +242,7 @@ class StreamProxyManager {
                 // Aggiunge lo stream proxato all'array
                 streams.push({
                     name: input.name,
-                    title: `🌐 ${input.originalName} [ITA]\n[Proxy ${streamType}]`,
+                    title: `🌐 ${input.originalName}\n[Proxy ${streamType}]`,
                     url: proxyUrl,
                     language: 'Italiana',
                     behaviorHints: {
@@ -257,7 +257,7 @@ class StreamProxyManager {
                 if (userConfig.force_proxy === 'true') {
                     streams.push({
                         name: input.name,
-                        title: `${input.originalName} [ITA]`,
+                        title: `${input.originalName}`,
                         url: input.url,
                         headers: input.headers,
                         language: 'Italiana',
@@ -276,7 +276,7 @@ class StreamProxyManager {
             if (userConfig.force_proxy === 'true') {
                 streams.push({
                     name: input.name,
-                    title: `${input.originalName} [ITA]`,
+                    title: `${input.originalName}`,
                     url: input.url,
                     headers: input.headers,
                     language: 'Italiana',
