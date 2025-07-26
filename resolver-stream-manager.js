@@ -179,7 +179,7 @@ class ResolverStreamManager {
                             title: `📺 ${streamDetails.name}`,
                             url: streamDetails.url,
                             headers: streamDetails.headers,
-                            language: 'Italian',
+                            language: 'ITA',
                             behaviorHints: {
                                 notWebReady: false,
                                 bingeGroup: "tv"
@@ -193,7 +193,7 @@ class ResolverStreamManager {
                         title: `🧩 ${streamDetails.name}\n[Resolved]`,
                         url: result.resolved_url,
                         headers: result.headers || streamDetails.headers,
-                        language: 'Italian',
+                        language: 'ITA',
                         behaviorHints: {
                             notWebReady: false,
                             bingeGroup: "tv"
