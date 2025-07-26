@@ -179,10 +179,10 @@ class StreamProxyManager {
             console.log(`⚠️ Dominio escluso dal proxy: ${input.url}`);
             return [{
                 name: input.name,
-                title: `${input.originalName}`,
+                title: `${input.originalName} [ITA]`,
                 url: input.url,
                 headers: input.headers,
-                language: 'IT',
+                language: 'Italiana',
                 behaviorHints: {
                     notWebReady: false,
                     bingeGroup: "tv"
@@ -242,9 +242,9 @@ class StreamProxyManager {
                 // Aggiunge lo stream proxato all'array
                 streams.push({
                     name: input.name,
-                    title: `🌐 ${input.originalName}\n[Proxy ${streamType}]`,
+                    title: `🌐 ${input.originalName} [ITA]\n[Proxy ${streamType}]`,
                     url: proxyUrl,
-                    language: 'IT',
+                    language: 'Italiana',
                     behaviorHints: {
                         notWebReady: false,
                         bingeGroup: "tv"
@@ -257,10 +257,10 @@ class StreamProxyManager {
                 if (userConfig.force_proxy === 'true') {
                     streams.push({
                         name: input.name,
-                        title: `${input.originalName}`,
+                        title: `${input.originalName} [ITA]`,
                         url: input.url,
                         headers: input.headers,
-                        language: 'IT',
+                        language: 'Italiana',
                         behaviorHints: {
                             notWebReady: false,
                             bingeGroup: "tv"
@@ -276,10 +276,10 @@ class StreamProxyManager {
             if (userConfig.force_proxy === 'true') {
                 streams.push({
                     name: input.name,
-                    title: `${input.originalName}`,
+                    title: `${input.originalName} [ITA]`,
                     url: input.url,
                     headers: input.headers,
-                    language: 'IT',
+                    language: 'Italiana',
                     behaviorHints: {
                         notWebReady: false,
                         bingeGroup: "tv"
