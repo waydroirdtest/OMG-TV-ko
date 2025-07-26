@@ -404,10 +404,10 @@ async function processOriginalStreams(originalStreamDetails, channel, userConfig
         for (const streamDetails of originalStreamDetails) {
             const streamMeta = {
                 name: streamDetails.name,
-                title: `📺 ${streamDetails.originalName || streamDetails.name}\n[ITA]`,
+                title: `📺 ${streamDetails.originalName || streamDetails.name}`,
                 url: streamDetails.url,
                 headers: streamDetails.headers,
-                language: 'ITA',
+                language: 'IT',
                 behaviorHints: {
                     notWebReady: false,
                     bingeGroup: "tv"

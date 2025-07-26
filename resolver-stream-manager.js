@@ -176,10 +176,10 @@ class ResolverStreamManager {
                         console.log(`ℹ️ URL non modificato dal resolver per: ${streamDetails.name}, lo manteniamo`);
                         return {
                             name: `${input.originalName}`,
-                            title: `📺 ${streamDetails.name}\n[ITA]`,
+                            title: `📺 ${streamDetails.name}`,
                             url: streamDetails.url,
                             headers: streamDetails.headers,
-                            language: 'ITA',
+                            language: 'IT',
                             behaviorHints: {
                                 notWebReady: false,
                                 bingeGroup: "tv"
@@ -190,10 +190,10 @@ class ResolverStreamManager {
 
                     return {
                         name: `${input.originalName}`,
-                        title: `🧩 ${streamDetails.name}\n[ITA]\n[Resolved]`,
+                        title: `🧩 ${streamDetails.name}\n[Resolved]`,
                         url: result.resolved_url,
                         headers: result.headers || streamDetails.headers,
-                        language: 'ITA',
+                        language: 'IT',
                         behaviorHints: {
                             notWebReady: false,
                             bingeGroup: "tv"
