@@ -245,13 +245,22 @@ const renderConfigPage = (protocol, host, query, manifest) => {
                    <h2>Genera Configurazione</h2>
                    <form id="configForm" onsubmit="updateConfig(event)">
                        <label>M3U URL:</label>
-                       <input type="url" name="m3u" 
+                       <input type="text" name="m3u" 
                               value="${m3uIsDisabled ? m3uDefaultUrl : (query.m3u || '')}" 
                               ${m3uIsDisabled ? 'readonly' : ''} 
+                              placeholder="https://example.com/playlist1.m3u,https://example.com/playlist2.m3u"
                               required>
+                       <small style="color: #999; display: block; margin-top: 5px;">
+                           💡 Puoi inserire più URL M3U separandoli con una virgola (,)
+                       </small>
                        
                        <label>EPG URL:</label>
-                       <input type="url" name="epg" value="${query.epg || ''}">
+                       <input type="text" name="epg" 
+                              value="${query.epg || ''}"
+                              placeholder="https://example.com/epg1.xml,https://example.com/epg2.xml">
+                       <small style="color: #999; display: block; margin-top: 5px;">
+                           💡 Puoi inserire più URL EPG separandoli con una virgola (,)
+                       </small>
                        
                        <label>
                            <input type="checkbox" name="epg_enabled" ${query.epg_enabled === 'true' ? 'checked' : ''}>
