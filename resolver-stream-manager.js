@@ -2,7 +2,7 @@ const config = require('./config');
 const PythonResolver = require('./python-resolver');
 
 function getLanguageFromConfig(userConfig) {
-    return userConfig.language || config.defaultLanguage || 'Italiana';
+    return userConfig.language || config.defaultLanguage || 'Italiano';
 }
 
 class ResolverStreamManager {

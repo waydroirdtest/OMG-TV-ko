@@ -3,7 +3,7 @@ const { URL } = require('url');
 const config = require('./config');
 
 function getLanguageFromConfig(userConfig) {
-    return userConfig.language || config.defaultLanguage || 'Italiana';
+    return userConfig.language || config.defaultLanguage || 'Italiano';
 }
 
 class StreamProxyManager {

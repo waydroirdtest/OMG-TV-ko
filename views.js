@@ -269,7 +269,7 @@ const renderConfigPage = (protocol, host, query, manifest) => {
 
                        <label>Lingua Canali:</label>
                        <select name="language" style="width: 100%; padding: 8px; margin-bottom: 10px; border-radius: 4px; border: 1px solid #666; background: #333; color: white;">
-                           <option value="Italiana" ${(query.language || 'Italiana') === 'Italiana' ? 'selected' : ''}>Italiana</option>
+                           <option value="Italiano" ${(query.language || 'Italiano') === 'Italiano' ? 'selected' : ''}>Italiano</option>
                            <option value="English" ${query.language === 'English' ? 'selected' : ''}>English</option>
                            <option value="Español" ${query.language === 'Español' ? 'selected' : ''}>Español</option>
                            <option value="Français" ${query.language === 'Français' ? 'selected' : ''}>Français</option>
