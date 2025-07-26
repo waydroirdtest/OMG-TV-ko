@@ -182,7 +182,7 @@ class StreamProxyManager {
                 title: `${input.originalName}`,
                 url: input.url,
                 headers: input.headers,
-                language: 'Italiana',
+                language: 'Italian',
                 behaviorHints: {
                     notWebReady: false,
                     bingeGroup: "tv"
@@ -244,7 +244,7 @@ class StreamProxyManager {
                     name: input.name,
                     title: `🌐 ${input.originalName}\n[Proxy ${streamType}]`,
                     url: proxyUrl,
-                    language: 'Italiana',
+                    language: 'Italian',
                     behaviorHints: {
                         notWebReady: false,
                         bingeGroup: "tv"
@@ -260,7 +260,7 @@ class StreamProxyManager {
                         title: `${input.originalName}`,
                         url: input.url,
                         headers: input.headers,
-                        language: 'Italiana',
+                        language: 'Italian',
                         behaviorHints: {
                             notWebReady: false,
                             bingeGroup: "tv"
@@ -279,7 +279,7 @@ class StreamProxyManager {
                     title: `${input.originalName}`,
                     url: input.url,
                     headers: input.headers,
-                    language: 'Italiana',
+                    language: 'Italian',
                     behaviorHints: {
                         notWebReady: false,
                         bingeGroup: "tv"

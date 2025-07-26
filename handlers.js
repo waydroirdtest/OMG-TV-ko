@@ -407,7 +407,7 @@ async function processOriginalStreams(originalStreamDetails, channel, userConfig
                 title: `📺 ${streamDetails.originalName || streamDetails.name}`,
                 url: streamDetails.url,
                 headers: streamDetails.headers,
-                language: 'Italiana',
+                language: 'Italian',
                 behaviorHints: {
                     notWebReady: false,
                     bingeGroup: "tv"
