@@ -176,7 +176,7 @@ class ResolverStreamManager {
                         console.log(`ℹ️ URL non modificato dal resolver per: ${streamDetails.name}, lo manteniamo`);
                         return {
                             name: `${input.originalName}`,
-                            title: `📺 ${streamDetails.name}`,
+                            title: `📺 ${streamDetails.name}\n[ITA]`,
                             url: streamDetails.url,
                             headers: streamDetails.headers,
                             language: 'ITA',
@@ -190,7 +190,7 @@ class ResolverStreamManager {
 
                     return {
                         name: `${input.originalName}`,
-                        title: `🧩 ${streamDetails.name}\n[Resolved]`,
+                        title: `🧩 ${streamDetails.name}\n[ITA]\n[Resolved]`,
                         url: result.resolved_url,
                         headers: result.headers || streamDetails.headers,
                         language: 'ITA',

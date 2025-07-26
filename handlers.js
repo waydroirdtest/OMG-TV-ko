@@ -404,7 +404,7 @@ async function processOriginalStreams(originalStreamDetails, channel, userConfig
         for (const streamDetails of originalStreamDetails) {
             const streamMeta = {
                 name: streamDetails.name,
-                title: `📺 ${streamDetails.originalName || streamDetails.name}`,
+                title: `📺 ${streamDetails.originalName || streamDetails.name}\n[ITA]`,
                 url: streamDetails.url,
                 headers: streamDetails.headers,
                 language: 'ITA',
