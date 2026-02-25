@@ -3,6 +3,21 @@ const EPGManager = require('./epg-manager');
 const logger = require('./logger');
 const StreamProxyManager = require('./stream-proxy-manager')(config);
 const ResolverStreamManager = require('./resolver-stream-manager')(config);
+const { I18N } = require('./views/views-i18n');
+
+// simple helper to map user-configured language names to i18n codes
+function getLangCode(userConfig) {
+    const lang = (userConfig.language || config.defaultLanguage || '').toString().toLowerCase();
+    if (lang.startsWith('it')) return 'it';
+    if (lang.startsWith('es')) return 'es';
+    if (lang.startsWith('fr')) return 'fr';
+    return 'en';
+}
+
+function t(key, userConfig) {
+    const code = getLangCode(userConfig);
+    return (I18N[code] && I18N[code][key]) || I18N.en[key] || key;
+}
 
 function getLanguageFromConfig(userConfig) {
     return userConfig.language || config.defaultLanguage || 'Italiana';
@@ -212,7 +227,7 @@ async function catalogHandler({ type, id, extra, config: userConfig, cacheManage
 function enrichWithEPG(meta, channelId, userConfig, epgManager) {
     const epg = epgManager || require('./epg-manager');
     if (!userConfig.epg_enabled || !channelId) {
-        meta.description = `Live channel: ${meta.name}`;
+        meta.description = `${t('live_channel', userConfig)} ${meta.name}`;
         meta.releaseInfo = 'LIVE';
         return meta;
     }
@@ -234,7 +249,7 @@ function enrichWithEPG(meta, channelId, userConfig, epgManager) {
         }
 
         if (upcomingPrograms && upcomingPrograms.length > 0) {
-            meta.description += '\n\nPROSSIMI PROGRAMMI:';
+            meta.description += '\n\n' + t('next_program', userConfig);
             upcomingPrograms.forEach(program => {
                 meta.description += `\n${program.start} - ${program.title}`;
             });
