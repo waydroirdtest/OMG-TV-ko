@@ -3,7 +3,7 @@ const EPGManager = require('./epg-manager');
 const logger = require('./logger');
 const StreamProxyManager = require('./stream-proxy-manager')(config);
 const ResolverStreamManager = require('./resolver-stream-manager')(config);
-const { I18N } = require('./views/views-i18n');
+const { I18N } = require('../views/views-i18n');
 
 // simple helper to map user-configured language names to i18n codes
 function getLangCode(userConfig) {
