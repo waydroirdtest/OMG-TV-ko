@@ -255,7 +255,7 @@ function enrichWithEPG(meta, channelId, userConfig, epgManager) {
             });
         }
 
-        meta.releaseInfo = `In onda: ${currentProgram.title}`;
+        meta.releaseInfo = `${t('currently_airing', userConfig)} ${currentProgram.title}`;
     }
 
     return meta;
@@ -281,12 +281,12 @@ async function streamHandler({ id, config: userConfig, cacheManager: cm, epgMana
 
         const NO_SIGNAL_URL = 'https://static.vecteezy.com/system/resources/previews/001/803/236/mp4/no-signal-bad-tv-free-video.mp4';
         const PSEUDO_STREAM_HINTS = { notWebReady: false, bingeGroup: 'tv' };
-        const PSEUDO_MSG_SUFFIX = '\nGo back and reopen the catalog in Stremio to see changes.';
+        const PSEUDO_MSG_SUFFIX = `\\n${t('go_back_reopen', userConfig)}`;
 
         function pseudoStream(success, title, url = NO_SIGNAL_URL) {
             return {
                 streams: [{
-                    name: success ? 'Completed' : 'Error',
+                    name: success ? t('completed', userConfig) : t('error', userConfig),
                     title: (success ? '✅ ' : '❌ ') + title + PSEUDO_MSG_SUFFIX,
                     url,
                     behaviorHints: PSEUDO_STREAM_HINTS
@@ -298,31 +298,31 @@ async function streamHandler({ id, config: userConfig, cacheManager: cm, epgMana
             const result = await runner.executeScript();
             if (result) {
                 await cacheManager.rebuildCache(userConfig.m3u, userConfig);
-                return pseudoStream(true, 'Playlist regenerated successfully.');
+                return pseudoStream(true, t('playlist_regenerated', userConfig));
             }
             logger.log(cacheManager?.sessionKey ?? '_', 'Python script execution error');
-            return pseudoStream(false, runner.lastError || 'Unknown error.');
+            return pseudoStream(false, runner.lastError || t('unknown_error', userConfig));
         }
 
         if (channelId === 'refreshm3u') {
             try {
-                if (!userConfig.m3u) return pseudoStream(false, 'M3U URL not configured.');
+                if (!userConfig.m3u) return pseudoStream(false, t('error_m3u_missing', userConfig));
                 await cacheManager.rebuildCache(userConfig.m3u, userConfig);
-                return pseudoStream(true, 'M3U playlist refreshed.');
+                return pseudoStream(true, t('m3u_refreshed', userConfig));
             } catch (err) {
                 logger.error(cacheManager?.sessionKey ?? '_', 'Refresh M3U error:', err.message);
-                return pseudoStream(false, err.message || 'Unknown error.');
+                return pseudoStream(false, err.message || t('unknown_error', userConfig));
             }
         }
 
         if (channelId === 'refreshepg') {
             try {
-                if (userConfig.epg_enabled !== 'true' || !userConfig.epg) return pseudoStream(false, 'EPG not enabled or EPG URL missing.');
+                if (userConfig.epg_enabled !== 'true' || !userConfig.epg) return pseudoStream(false, t('error_epg_not_enabled', userConfig));
                 await epgManager.startEPGUpdate(userConfig.epg);
-                return pseudoStream(true, 'EPG updated.');
+                return pseudoStream(true, t('epg_refreshed', userConfig));
             } catch (err) {
                 logger.error(cacheManager?.sessionKey ?? '_', 'Refresh EPG error:', err.message);
-                return pseudoStream(false, err.message || 'Unknown error.');
+                return pseudoStream(false, err.message || t('unknown_error', userConfig));
             }
         }
 
