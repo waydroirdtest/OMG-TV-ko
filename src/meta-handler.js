@@ -1,5 +1,19 @@
 const config = require('./config');
 const logger = require('./logger');
+const { I18N } = require('../views/views-i18n');
+
+function getLangCode(userConfig) {
+    const lang = (userConfig.language || config.defaultLanguage || '').toString().toLowerCase();
+    if (lang.startsWith('it')) return 'it';
+    if (lang.startsWith('es')) return 'es';
+    if (lang.startsWith('fr')) return 'fr';
+    return 'en';
+}
+
+function t(key, userConfig) {
+    const code = getLangCode(userConfig);
+    return (I18N[code] && I18N[code][key]) || I18N.en[key] || key;
+}
 
 function normalizeId(id) {
     const beforeAt = (typeof id === 'string' && id.includes('@')) ? id.split('@')[0] : id;
@@ -18,20 +32,20 @@ function enrichWithDetailedEPG(meta, channelId, userConfig, epgManager) {
     if (currentProgram) {
         let description = [];
 
-        description.push('📺 ON AIR NOW:', currentProgram.title);
+        description.push(t('epg_on_air', userConfig), currentProgram.title);
 
         if (currentProgram.description) {
             description.push('', currentProgram.description);
         }
 
-        description.push('', `⏰ ${currentProgram.start} - ${currentProgram.stop}`);
+        description.push('', `${t('epg_time_slot_icon', userConfig)} ${currentProgram.start} - ${currentProgram.stop}`);
 
         if (currentProgram.category) {
             description.push(`🏷️ ${currentProgram.category}`);
         }
 
         if (upcomingPrograms?.length > 0) {
-            description.push('', '📅 UPCOMING PROGRAMS:');
+            description.push('', t('epg_upcoming', userConfig));
             upcomingPrograms.forEach(program => {
                 description.push(
                     '',
@@ -56,9 +70,9 @@ function enrichWithDetailedEPG(meta, channelId, userConfig, epgManager) {
 
 const PSEUDO_CHANNEL_IDS = ['rigeneraplaylistpython', 'refreshm3u', 'refreshepg'];
 const PSEUDO_META = {
-    refreshm3u: { name: 'Refresh M3U playlist', description: 'Reload the M3U playlist from the configured source. Go back and reopen the catalog to see changes.' },
-    refreshepg: { name: 'Refresh EPG', description: 'Update the program guide (EPG) from the configured source. Go back and reopen the catalog to see changes.' },
-    rigeneraplaylistpython: { name: 'Regenerate Python playlist', description: 'Run the Python script to regenerate the playlist. Go back and reopen the catalog to see changes.' }
+    refreshm3u: { name: 'refresh_m3u_name', description: 'desc_refresh_m3u' },
+    refreshepg: { name: 'refresh_epg_name', description: 'desc_refresh_epg' },
+    rigeneraplaylistpython: { name: 'regenerate_python_name', description: 'desc_regenerate_python' }
 };
 const SETTINGS_LOGO = 'https://raw.githubusercontent.com/mccoy88f/OMG-TV-Stremio-Addon/refs/heads/main/tv.png';
 
@@ -75,11 +89,11 @@ async function metaHandler({ type, id, config: userConfig, cacheManager: cm, epg
                 meta: {
                     id: fullId,
                     type: 'tv',
-                    name: info.name,
+                    name: t(info.name, userConfig),
                     poster: SETTINGS_LOGO,
                     background: SETTINGS_LOGO,
                     logo: SETTINGS_LOGO,
-                    description: info.description,
+                    description: t(info.description, userConfig),
                     releaseInfo: 'LIVE',
                     posterShape: 'square',
                     behaviorHints: { isLive: true, defaultVideoId: fullId }
