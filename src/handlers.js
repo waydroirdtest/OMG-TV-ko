@@ -236,16 +236,16 @@ function enrichWithEPG(meta, channelId, userConfig, epgManager) {
     const upcomingPrograms = epg.getUpcomingPrograms(normalizeId(channelId));
 
     if (currentProgram) {
-        meta.description = `IN ONDA ORA:\n${currentProgram.title}`;
+        meta.description = `${t('now_on_air', userConfig)}\n${currentProgram.title}`;
 
         if (currentProgram.description) {
             meta.description += `\n${currentProgram.description}`;
         }
 
-        meta.description += `\nOrario: ${currentProgram.start} - ${currentProgram.stop}`;
+        meta.description += `\n${t('time_slot', userConfig)} ${currentProgram.start} - ${currentProgram.stop}`;
 
         if (currentProgram.category) {
-            meta.description += `\nCategoria: ${currentProgram.category}`;
+            meta.description += `\n${t('category', userConfig)} ${currentProgram.category}`;
         }
 
         if (upcomingPrograms && upcomingPrograms.length > 0) {
