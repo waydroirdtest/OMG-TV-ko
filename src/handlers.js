@@ -3,6 +3,21 @@ const EPGManager = require('./epg-manager');
 const logger = require('./logger');
 const StreamProxyManager = require('./stream-proxy-manager')(config);
 const ResolverStreamManager = require('./resolver-stream-manager')(config);
+const { I18N } = require('../views/views-i18n');
+
+// simple helper to map user-configured language names to i18n codes
+function getLangCode(userConfig) {
+    const lang = (userConfig.language || config.defaultLanguage || '').toString().toLowerCase();
+    if (lang.startsWith('it')) return 'it';
+    if (lang.startsWith('es')) return 'es';
+    if (lang.startsWith('fr')) return 'fr';
+    return 'en';
+}
+
+function t(key, userConfig) {
+    const code = getLangCode(userConfig);
+    return (I18N[code] && I18N[code][key]) || I18N.en[key] || key;
+}
 
 function getLanguageFromConfig(userConfig) {
     return userConfig.language || config.defaultLanguage || 'Italiana';
@@ -212,7 +227,7 @@ async function catalogHandler({ type, id, extra, config: userConfig, cacheManage
 function enrichWithEPG(meta, channelId, userConfig, epgManager) {
     const epg = epgManager || require('./epg-manager');
     if (!userConfig.epg_enabled || !channelId) {
-        meta.description = `Live channel: ${meta.name}`;
+        meta.description = `${t('live_channel', userConfig)} ${meta.name}`;
         meta.releaseInfo = 'LIVE';
         return meta;
     }
@@ -221,26 +236,26 @@ function enrichWithEPG(meta, channelId, userConfig, epgManager) {
     const upcomingPrograms = epg.getUpcomingPrograms(normalizeId(channelId));
 
     if (currentProgram) {
-        meta.description = `IN ONDA ORA:\n${currentProgram.title}`;
+        meta.description = `${t('now_on_air', userConfig)}\n${currentProgram.title}`;
 
         if (currentProgram.description) {
             meta.description += `\n${currentProgram.description}`;
         }
 
-        meta.description += `\nOrario: ${currentProgram.start} - ${currentProgram.stop}`;
+        meta.description += `\n${t('time_slot', userConfig)} ${currentProgram.start} - ${currentProgram.stop}`;
 
         if (currentProgram.category) {
-            meta.description += `\nCategoria: ${currentProgram.category}`;
+            meta.description += `\n${t('category', userConfig)} ${currentProgram.category}`;
         }
 
         if (upcomingPrograms && upcomingPrograms.length > 0) {
-            meta.description += '\n\nPROSSIMI PROGRAMMI:';
+            meta.description += '\n\n' + t('next_program', userConfig);
             upcomingPrograms.forEach(program => {
                 meta.description += `\n${program.start} - ${program.title}`;
             });
         }
 
-        meta.releaseInfo = `In onda: ${currentProgram.title}`;
+        meta.releaseInfo = `${t('currently_airing', userConfig)} ${currentProgram.title}`;
     }
 
     return meta;
@@ -266,12 +281,12 @@ async function streamHandler({ id, config: userConfig, cacheManager: cm, epgMana
 
         const NO_SIGNAL_URL = 'https://static.vecteezy.com/system/resources/previews/001/803/236/mp4/no-signal-bad-tv-free-video.mp4';
         const PSEUDO_STREAM_HINTS = { notWebReady: false, bingeGroup: 'tv' };
-        const PSEUDO_MSG_SUFFIX = '\nGo back and reopen the catalog in Stremio to see changes.';
+        const PSEUDO_MSG_SUFFIX = `\\n${t('go_back_reopen', userConfig)}`;
 
         function pseudoStream(success, title, url = NO_SIGNAL_URL) {
             return {
                 streams: [{
-                    name: success ? 'Completed' : 'Error',
+                    name: success ? t('completed', userConfig) : t('error', userConfig),
                     title: (success ? '✅ ' : '❌ ') + title + PSEUDO_MSG_SUFFIX,
                     url,
                     behaviorHints: PSEUDO_STREAM_HINTS
@@ -283,31 +298,31 @@ async function streamHandler({ id, config: userConfig, cacheManager: cm, epgMana
             const result = await runner.executeScript();
             if (result) {
                 await cacheManager.rebuildCache(userConfig.m3u, userConfig);
-                return pseudoStream(true, 'Playlist regenerated successfully.');
+                return pseudoStream(true, t('playlist_regenerated', userConfig));
             }
             logger.log(cacheManager?.sessionKey ?? '_', 'Python script execution error');
-            return pseudoStream(false, runner.lastError || 'Unknown error.');
+            return pseudoStream(false, runner.lastError || t('unknown_error', userConfig));
         }
 
         if (channelId === 'refreshm3u') {
             try {
-                if (!userConfig.m3u) return pseudoStream(false, 'M3U URL not configured.');
+                if (!userConfig.m3u) return pseudoStream(false, t('error_m3u_missing', userConfig));
                 await cacheManager.rebuildCache(userConfig.m3u, userConfig);
-                return pseudoStream(true, 'M3U playlist refreshed.');
+                return pseudoStream(true, t('m3u_refreshed', userConfig));
             } catch (err) {
                 logger.error(cacheManager?.sessionKey ?? '_', 'Refresh M3U error:', err.message);
-                return pseudoStream(false, err.message || 'Unknown error.');
+                return pseudoStream(false, err.message || t('unknown_error', userConfig));
             }
         }
 
         if (channelId === 'refreshepg') {
             try {
-                if (userConfig.epg_enabled !== 'true' || !userConfig.epg) return pseudoStream(false, 'EPG not enabled or EPG URL missing.');
+                if (userConfig.epg_enabled !== 'true' || !userConfig.epg) return pseudoStream(false, t('error_epg_not_enabled', userConfig));
                 await epgManager.startEPGUpdate(userConfig.epg);
-                return pseudoStream(true, 'EPG updated.');
+                return pseudoStream(true, t('epg_refreshed', userConfig));
             } catch (err) {
                 logger.error(cacheManager?.sessionKey ?? '_', 'Refresh EPG error:', err.message);
-                return pseudoStream(false, err.message || 'Unknown error.');
+                return pseudoStream(false, err.message || t('unknown_error', userConfig));
             }
         }
 
